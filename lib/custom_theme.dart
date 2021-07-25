@@ -18,16 +18,32 @@ class CustomTheme with ChangeNotifier {
   static ThemeData get darkTheme {
     return ThemeData(
       appBarTheme: AppBarTheme(
-        color: Color(0xFF3C6E71),
+        color: Color(0xFF3C6E71), //turquoise
         centerTitle: true,
         titleTextStyle: TextStyle(color: Colors.white),
       ),
-      // primaryColor: Color(0xFF3C6E71),
+      primaryColor: Color(0xFF353535), // dark grey
+      accentColor: Color(0xFF3C6E71),
       primaryTextTheme: TextTheme(
         headline3: TextStyle(
-          color: Colors.white, 
+          color: Colors.white,
           fontFamily: 'Caveat',
           fontWeight: FontWeight.bold,
+        ),
+        bodyText1: TextStyle(
+          color: Colors.white,
+        ),
+      ),
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ButtonStyle(
+          backgroundColor: MaterialStateProperty.all(
+            Color(0xFF3C6E71),
+          ),
+          shape: MaterialStateProperty.all(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+          ),
         ),
       ),
     );
