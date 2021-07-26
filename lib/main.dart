@@ -37,7 +37,7 @@ class _FlightClubState extends State<FlightClub> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: '/walkthrough',
+      initialRoute: '/home',
       routes: {
         '/': (context) => Loading(),
         '/walkthrough': (context) => Walkthrough(),

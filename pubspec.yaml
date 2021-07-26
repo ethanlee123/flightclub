@@ -29,6 +29,10 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   carousel_slider: ^4.0.0
+  provider: ^5.0.0
+  geolocator: ^7.3.1
+  http: ^0.13.3
+  google_maps_flutter: ^2.0.6
 
 dev_dependencies:
   flutter_test:
@@ -50,6 +54,8 @@ flutter:
     - assets/images/city.png
     - assets/images/packages.png
     - assets/images/mobile_map.png
+    - assets/images/drone_art.png
+    - assets/images/mountains.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

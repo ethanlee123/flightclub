@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 CustomTheme currentTheme = CustomTheme();
 
@@ -17,6 +18,7 @@ class CustomTheme with ChangeNotifier {
 
   static ThemeData get darkTheme {
     return ThemeData(
+    //   primarySwatch: Colors.blue,
       appBarTheme: AppBarTheme(
         color: Color(0xFF3C6E71), //turquoise
         centerTitle: true,
@@ -24,6 +26,7 @@ class CustomTheme with ChangeNotifier {
       ),
       primaryColor: Color(0xFF353535), // dark grey
       accentColor: Color(0xFF3C6E71),
+      backgroundColor: Color(0xFFD9D9D9),
       primaryTextTheme: TextTheme(
         headline3: TextStyle(
           color: Colors.white,
@@ -32,6 +35,14 @@ class CustomTheme with ChangeNotifier {
         ),
         bodyText1: TextStyle(
           color: Colors.white,
+          fontSize: 24.0,
+        ),
+      ),
+      accentTextTheme: TextTheme(
+        headline3: TextStyle(
+          color: Color(0xFF3C6E71),
+          fontFamily: 'Caveat',
+          fontWeight: FontWeight.bold,
         ),
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
@@ -44,8 +55,28 @@ class CustomTheme with ChangeNotifier {
               borderRadius: BorderRadius.circular(10.0),
             ),
           ),
+          minimumSize: MaterialStateProperty.all(Size(double.infinity, 40)),
         ),
       ),
+      inputDecorationTheme: InputDecorationTheme(
+        labelStyle: TextStyle(
+          color: Color(0xFF3C6E71),
+        ),
+        filled: true,
+        fillColor: Colors.white,
+        contentPadding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 20.0),
+        // border: InputBorder(
+        //     top: BorderSide(width: 50),
+        //     dimensions: EdgeInsets.all(50.0)
+        // ),
+
+      ),
+    //   textButtonTheme: TextButtonThemeData(
+    //       style: ButtonStyle(
+    //         color: Color(0xFF3C6E71),
+
+    //       ),
+    //   ),
     );
   }
 }
