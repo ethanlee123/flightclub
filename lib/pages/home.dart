@@ -12,6 +12,10 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import 'components/bottom_nav_bar.dart';
 
+import 'package:flutter_polyline_points/flutter_polyline_points.dart';
+
+import 'dart:math';
+
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
 
@@ -32,6 +36,17 @@ class _HomeState extends State<Home> {
     zoom: 14,
   );
 
+  Set<Polyline> _polylines = Set<Polyline>();
+  List<LatLng> polylineCoords = [];
+  PolylinePoints polylinePoints = PolylinePoints();
+  WarehouseLocations warehouseLocations = WarehouseLocations();
+
+  @override
+  void initState() {
+    super.initState();
+    // polylinePoints = PolylinePoints();
+  }
+
   @override
   Widget build(BuildContext context) {
     final mapBloc = Provider.of<MapBloc>(context);
@@ -42,7 +57,6 @@ class _HomeState extends State<Home> {
     //     mapBloc.currentLocation.longitude,
     //     49.1876,
     //     -122.8583);
-    WarehouseLocations warehouseLocations = WarehouseLocations();
     Set<Circle> warehouseLocationCircles = Set.from([
       Circle(
         circleId: CircleId("wh"),
@@ -69,8 +83,6 @@ class _HomeState extends State<Home> {
                         initialCameraPosition: _initialCameraPosition,
                         zoomControlsEnabled: false,
                         myLocationEnabled: true,
-                        onMapCreated: (controller) =>
-                            {_assignControllers(controller)},
                         markers: {
                           Marker(
                             position: LatLng(
@@ -109,7 +121,17 @@ class _HomeState extends State<Home> {
                         onLongPress: (position) => {
                           _changeMarker(position),
                           mapBloc.changePriority(),
+                          _setPolylines(
+                              position.latitude,
+                              position.longitude),
                         },
+                        onMapCreated: (controller) => {
+                          {_assignControllers(controller)},
+                          _setPolylines(
+                              mapBloc.currentLocation.latitude,
+                              mapBloc.currentLocation.longitude),
+                        },
+                        polylines: _polylines,
                       ),
                     ),
                   )
@@ -155,6 +177,35 @@ class _HomeState extends State<Home> {
       dropOffMarker = Marker(
         markerId: MarkerId("dropOff"),
         position: pos,
+      );
+    });
+  }
+
+  void _setPolylines(double destLat, double destLng) async {
+    List<double> distances = [];
+    GeoCoordDistance dist = GeoCoordDistance(destLat, destLng);
+
+    // Calcualte distances to warehouses
+    warehouseLocations.locations.forEach((warehouse) {
+      double distance = dist.getDistanceInMeters(warehouse.lat, warehouse.lng);
+      distances.add(distance);
+    });
+
+    // Find index of shortest distance
+    int index = distances.indexOf(distances.reduce(min));
+    
+    polylineCoords.clear();
+    polylineCoords.add(LatLng(warehouseLocations.locations[index].lat, warehouseLocations.locations[index].lng));
+    polylineCoords.add(LatLng(destLat, destLng));
+
+    setState(() {
+      _polylines.add(
+        Polyline(
+          width: 2,
+          polylineId: PolylineId('route'),
+          color: Colors.black,
+          points: polylineCoords,
+        ),
       );
     });
   }
