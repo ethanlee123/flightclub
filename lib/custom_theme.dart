@@ -77,6 +77,13 @@ class CustomTheme with ChangeNotifier {
 
     //       ),
     //   ),
+        bottomNavigationBarTheme: BottomNavigationBarThemeData(
+            backgroundColor: Color(0xFF284B63),
+            selectedItemColor: Color(0xFFD9D9D9),
+            unselectedLabelStyle: TextStyle(fontSize: 0),
+            // unselectedIconTheme: IconThemeData(size: 36.0),
+            showUnselectedLabels: false,
+        ),
     );
   }
 }

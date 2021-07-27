@@ -17,8 +17,6 @@ class GeoCoordDistance {
   getDistanceInMeters() {
     double distance = Geolocator.distanceBetween(
         startLatitude, startLongitude, endLatitude, endLongitude);
-    print("DISTANCE IN METERS");
-    print(distance);
     return distance;
   }
 

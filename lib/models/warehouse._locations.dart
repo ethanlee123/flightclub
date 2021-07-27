@@ -3,9 +3,9 @@ import 'warehouse_location.dart';
 
 class WarehouseLocations {
     List<WarehouseLocation> locations = [
-        WarehouseLocation(lat: 49.1876, lng: -122.8583, id: 0),
-        WarehouseLocation(lat: 49.1934, lng: -122.8599, id: 1),
-        WarehouseLocation(lat: 49.1844, lng: -122.8488, id: 3),
+        WarehouseLocation(lat: 49.1876, lng: -122.8583, id: 'warehouse 0'),
+        WarehouseLocation(lat: 49.1934, lng: -122.8599, id: 'warehouse 1'),
+        WarehouseLocation(lat: 49.1844, lng: -122.8488, id: 'warehouse 3'),
     ];
 
 

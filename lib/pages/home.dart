@@ -10,6 +10,8 @@ import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+import 'components/bottom_nav_bar.dart';
+
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
 
@@ -78,22 +80,22 @@ class _HomeState extends State<Home> {
                             icon: BitmapDescriptor.defaultMarkerWithHue(
                                 BitmapDescriptor.hueGreen),
                           ),
-                          // Marker(
-                          //   position: LatLng(
-                          //       warehouseLocations.locations[1].lat,
-                          //       warehouseLocations.locations[1].lng),
-                          //   markerId: MarkerId('warehouse 1'),
-                          //   icon: BitmapDescriptor.defaultMarkerWithHue(
-                          //       BitmapDescriptor.hueGreen),
-                          // ),
-                          // Marker(
-                          //   position: LatLng(
-                          //       warehouseLocations.locations[2].lat,
-                          //       warehouseLocations.locations[2].lng),
-                          //   markerId: MarkerId('warehouse 2'),
-                          //   icon: BitmapDescriptor.defaultMarkerWithHue(
-                          //       BitmapDescriptor.hueGreen),
-                          // ),
+                          Marker(
+                            position: LatLng(
+                                warehouseLocations.locations[1].lat,
+                                warehouseLocations.locations[1].lng),
+                            markerId: MarkerId('warehouse 1'),
+                            icon: BitmapDescriptor.defaultMarkerWithHue(
+                                BitmapDescriptor.hueGreen),
+                          ),
+                          Marker(
+                            position: LatLng(
+                                warehouseLocations.locations[2].lat,
+                                warehouseLocations.locations[2].lng),
+                            markerId: MarkerId('warehouse 2'),
+                            icon: BitmapDescriptor.defaultMarkerWithHue(
+                                BitmapDescriptor.hueGreen),
+                          ),
                           if (mapBloc.prioritizeCurrentLoc)
                             Marker(
                               position: LatLng(mapBloc.currentLocation.latitude,
@@ -126,27 +128,13 @@ class _HomeState extends State<Home> {
         child: Icon(Icons.center_focus_strong,
             color: Theme.of(context).backgroundColor),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Theme.of(context).primaryColor,
-        currentIndex: 0,
-        // onTap: (index) => print(index)),
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: "Home",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: "Home",
-          ),
-        ],
-      ),
+      bottomNavigationBar: BottomNavBar(),
     );
   }
 
   void _assignControllers(controller) {
     _googleMapController.complete(controller);
-    controller = null;
+    // controller = null;
   }
 
   Future<void> _cameraToLocation(double lat, double lng) async {
@@ -163,8 +151,6 @@ class _HomeState extends State<Home> {
   }
 
   void _changeMarker(LatLng pos) {
-    print(pos);
-
     setState(() {
       dropOffMarker = Marker(
         markerId: MarkerId("dropOff"),
