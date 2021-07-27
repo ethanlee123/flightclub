@@ -37,6 +37,10 @@ class CustomTheme with ChangeNotifier {
           color: Colors.white,
           fontSize: 24.0,
         ),
+        bodyText2: TextStyle(
+          color: Colors.white,
+          fontSize: 16.0,
+        ),
       ),
       accentTextTheme: TextTheme(
         headline3: TextStyle(

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flightclub/blocs/map_bloc.dart';
 import 'package:flightclub/models/warehouse._locations.dart';
+import 'package:flightclub/pages/components/bottom_drawer.dart';
 import 'package:flightclub/utils/geocoord_distance.dart';
 import 'package:flutter/material.dart';
 
@@ -41,6 +42,9 @@ class _HomeState extends State<Home> {
   PolylinePoints polylinePoints = PolylinePoints();
   WarehouseLocations warehouseLocations = WarehouseLocations();
 
+  bool showBottomMenu = false;
+  int threshold = 200;
+
   @override
   void initState() {
     super.initState();
@@ -69,86 +73,101 @@ class _HomeState extends State<Home> {
 
     return Scaffold(
       body: SafeArea(
-        child: Column(
-          children: <Widget>[
-            TextField(
-              decoration: InputDecoration(labelText: "search"),
-            ),
-            (mapBloc.loaded)
-                ? Expanded(
-                    child: Container(
-                      height: 300,
-                      child: GoogleMap(
-                        mapType: MapType.normal,
-                        initialCameraPosition: _initialCameraPosition,
-                        zoomControlsEnabled: false,
-                        myLocationEnabled: true,
-                        markers: {
-                          Marker(
-                            position: LatLng(
-                                warehouseLocations.locations[0].lat,
-                                warehouseLocations.locations[0].lng),
-                            markerId: MarkerId('warehouse 0'),
-                            icon: BitmapDescriptor.defaultMarkerWithHue(
-                                BitmapDescriptor.hueGreen),
-                          ),
-                          Marker(
-                            position: LatLng(
-                                warehouseLocations.locations[1].lat,
-                                warehouseLocations.locations[1].lng),
-                            markerId: MarkerId('warehouse 1'),
-                            icon: BitmapDescriptor.defaultMarkerWithHue(
-                                BitmapDescriptor.hueGreen),
-                          ),
-                          Marker(
-                            position: LatLng(
-                                warehouseLocations.locations[2].lat,
-                                warehouseLocations.locations[2].lng),
-                            markerId: MarkerId('warehouse 2'),
-                            icon: BitmapDescriptor.defaultMarkerWithHue(
-                                BitmapDescriptor.hueGreen),
-                          ),
-                          if (mapBloc.prioritizeCurrentLoc)
-                            Marker(
-                              position: LatLng(mapBloc.currentLocation.latitude,
+        child: Stack(
+          children: [
+            Column(
+              children: <Widget>[
+                TextField(
+                  decoration: InputDecoration(labelText: "search"),
+                ),
+                (mapBloc.loaded)
+                    ? Expanded(
+                        child: Container(
+                          height: 300,
+                          child: GoogleMap(
+                            mapType: MapType.normal,
+                            initialCameraPosition: _initialCameraPosition,
+                            zoomControlsEnabled: false,
+                            myLocationEnabled: true,
+                            markers: {
+                              Marker(
+                                position: LatLng(
+                                    warehouseLocations.locations[0].lat,
+                                    warehouseLocations.locations[0].lng),
+                                markerId: MarkerId('warehouse 0'),
+                                icon: BitmapDescriptor.defaultMarkerWithHue(
+                                    BitmapDescriptor.hueGreen),
+                              ),
+                              Marker(
+                                position: LatLng(
+                                    warehouseLocations.locations[1].lat,
+                                    warehouseLocations.locations[1].lng),
+                                markerId: MarkerId('warehouse 1'),
+                                icon: BitmapDescriptor.defaultMarkerWithHue(
+                                    BitmapDescriptor.hueGreen),
+                              ),
+                              Marker(
+                                position: LatLng(
+                                    warehouseLocations.locations[2].lat,
+                                    warehouseLocations.locations[2].lng),
+                                markerId: MarkerId('warehouse 2'),
+                                icon: BitmapDescriptor.defaultMarkerWithHue(
+                                    BitmapDescriptor.hueGreen),
+                              ),
+                              if (mapBloc.prioritizeCurrentLoc)
+                                Marker(
+                                  position: LatLng(
+                                      mapBloc.currentLocation.latitude,
+                                      mapBloc.currentLocation.longitude),
+                                  markerId: MarkerId('warehouse 0'),
+                                )
+                              else
+                                (dropOffMarker),
+                            },
+                            circles: warehouseLocationCircles,
+                            onLongPress: (position) => {
+                              _changeMarker(position),
+                              mapBloc.changePriority(),
+                              _setPolylines(
+                                  position.latitude, position.longitude),
+                            },
+                            onMapCreated: (controller) => {
+                              {_assignControllers(controller)},
+                              _setPolylines(mapBloc.currentLocation.latitude,
                                   mapBloc.currentLocation.longitude),
-                              markerId: MarkerId('warehouse 0'),
-                            )
-                          else
-                            (dropOffMarker),
-                        },
-                        circles: warehouseLocationCircles,
-                        onLongPress: (position) => {
-                          _changeMarker(position),
-                          mapBloc.changePriority(),
-                          _setPolylines(
-                              position.latitude,
-                              position.longitude),
-                        },
-                        onMapCreated: (controller) => {
-                          {_assignControllers(controller)},
-                          _setPolylines(
-                              mapBloc.currentLocation.latitude,
-                              mapBloc.currentLocation.longitude),
-                        },
-                        polylines: _polylines,
+                            },
+                            polylines: _polylines,
+                          ),
+                        ),
+                      )
+                    : Center(
+                        child: CircularProgressIndicator(),
                       ),
-                    ),
-                  )
-                : Center(
-                    child: CircularProgressIndicator(),
-                  ),
+              ],
+            ),
+            Positioned(
+              left: 0,
+              bottom: (showBottomMenu
+                  ? 0
+                  : -(MediaQuery.of(context).size.height / 5)),
+              child: GestureDetector(
+                  onPanEnd: (details) {
+                    // debugPrint(details.velocity.pixelsPerSecond.dy.toString());
+                    if (details.velocity.pixelsPerSecond.dy > threshold) {
+                      setState(() {
+                        showBottomMenu = false;
+                      });
+                    } else if (details.velocity.pixelsPerSecond.dy <
+                        -threshold) {
+                      setState(() {
+                        showBottomMenu = true;
+                      });
+                    }
+                  },
+                  child: BottomDrawer()),
+            )
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Theme.of(context).accentColor,
-        onPressed: () {
-          _cameraToLocation(mapBloc.currentLocation.latitude,
-              mapBloc.currentLocation.longitude);
-        },
-        child: Icon(Icons.center_focus_strong,
-            color: Theme.of(context).backgroundColor),
       ),
       bottomNavigationBar: BottomNavBar(),
     );
@@ -156,7 +175,6 @@ class _HomeState extends State<Home> {
 
   void _assignControllers(controller) {
     _googleMapController.complete(controller);
-    // controller = null;
   }
 
   Future<void> _cameraToLocation(double lat, double lng) async {
@@ -181,11 +199,11 @@ class _HomeState extends State<Home> {
     });
   }
 
-  void _setPolylines(double destLat, double destLng) async {
+  Future<void> _setPolylines(double destLat, double destLng) async {
     List<double> distances = [];
     GeoCoordDistance dist = GeoCoordDistance(destLat, destLng);
 
-    // Calcualte distances to warehouses
+    // Calculate distances to warehouses
     warehouseLocations.locations.forEach((warehouse) {
       double distance = dist.getDistanceInMeters(warehouse.lat, warehouse.lng);
       distances.add(distance);
@@ -193,9 +211,10 @@ class _HomeState extends State<Home> {
 
     // Find index of shortest distance
     int index = distances.indexOf(distances.reduce(min));
-    
+
     polylineCoords.clear();
-    polylineCoords.add(LatLng(warehouseLocations.locations[index].lat, warehouseLocations.locations[index].lng));
+    polylineCoords.add(LatLng(warehouseLocations.locations[index].lat,
+        warehouseLocations.locations[index].lng));
     polylineCoords.add(LatLng(destLat, destLng));
 
     setState(() {
@@ -208,5 +227,14 @@ class _HomeState extends State<Home> {
         ),
       );
     });
+
+    // Move camera to new position
+    _cameraToLocation(warehouseLocations.locations[index].lat,
+        warehouseLocations.locations[index].lng);
+  }
+
+  void closeBottomMenu() {
+    showBottomMenu = false;
   }
 }
+
