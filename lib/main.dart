@@ -41,7 +41,7 @@ class _FlightClubState extends State<FlightClub> {
     return ChangeNotifierProvider(
       create: (context) => MapBloc(),
       child: MaterialApp(
-        initialRoute: '/home',
+        initialRoute: '/checkout',
         routes: {
           '/': (context) => Loading(),
           '/walkthrough': (context) => Walkthrough(),

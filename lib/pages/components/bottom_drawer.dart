@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-
 class BottomDrawer extends StatefulWidget {
-  const BottomDrawer({Key? key}) : super(key: key);
+  const BottomDrawer({
+    Key? key,
+  }) : super(key: key);
 
   @override
   _BottomDrawerState createState() => _BottomDrawerState();
@@ -22,10 +23,12 @@ class _BottomDrawerState extends State<BottomDrawer> {
           padding: const EdgeInsets.symmetric(horizontal: 15.0),
           child: Column(
             children: <Widget>[
-              Icon(
-                Icons.keyboard_arrow_up,
-                size: 20,
-                color: Colors.white,
+              Container(
+                child: Icon(
+                  Icons.keyboard_arrow_up,
+                  size: 20,
+                  color: Colors.white,
+                ),
               ),
               SizedBox(height: 10),
               Row(
@@ -37,10 +40,15 @@ class _BottomDrawerState extends State<BottomDrawer> {
                       style: Theme.of(context).primaryTextTheme.bodyText2)
                 ],
               ),
+              SizedBox(height: 50.0),
               SizedBox(
                 width: double.infinity,
-                child: MaterialButton(
-                    onPressed: () {}, color: Theme.of(context).accentColor),
+                child: ElevatedButton(
+                    onPressed: () {
+                      Navigator. pushNamed(context, '/checkout');
+                    }, 
+                    child: Text('Proceed'),
+                  ),
               ),
             ],
           ),

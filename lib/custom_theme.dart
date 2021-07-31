@@ -18,7 +18,7 @@ class CustomTheme with ChangeNotifier {
 
   static ThemeData get darkTheme {
     return ThemeData(
-    //   primarySwatch: Colors.blue,
+      //   primarySwatch: Colors.blue,
       appBarTheme: AppBarTheme(
         color: Color(0xFF3C6E71), //turquoise
         centerTitle: true,
@@ -40,7 +40,12 @@ class CustomTheme with ChangeNotifier {
         bodyText2: TextStyle(
           color: Colors.white,
           fontSize: 16.0,
+          fontWeight: FontWeight.bold
         ),
+        button: TextStyle(
+            color: Color(0xFF3C6E71),
+            fontSize: 14.0
+        )
       ),
       accentTextTheme: TextTheme(
         headline3: TextStyle(
@@ -48,6 +53,14 @@ class CustomTheme with ChangeNotifier {
           fontFamily: 'Caveat',
           fontWeight: FontWeight.bold,
         ),
+        headline4: TextStyle(
+          fontFamily: 'Caveat',
+          fontWeight: FontWeight.bold,
+        ),
+        subtitle2: TextStyle( // Used in checkout summary page
+            color: Color.fromRGBO(217, 217, 217, 0.5),
+            fontSize: 16.0,
+        )
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ButtonStyle(
@@ -62,9 +75,21 @@ class CustomTheme with ChangeNotifier {
           minimumSize: MaterialStateProperty.all(Size(double.infinity, 40)),
         ),
       ),
+      outlinedButtonTheme: OutlinedButtonThemeData(
+        style: ButtonStyle(
+          side: MaterialStateProperty.all(
+            BorderSide(color: Color(0xFF3C6E71)),
+          ),
+          shape: MaterialStateProperty.all(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+          ),
+        ),
+      ),
       inputDecorationTheme: InputDecorationTheme(
         labelStyle: TextStyle(
-          color: Color(0xFF3C6E71),
+          color: Color(0xFF284B63),
         ),
         filled: true,
         fillColor: Colors.white,
@@ -73,21 +98,20 @@ class CustomTheme with ChangeNotifier {
         //     top: BorderSide(width: 50),
         //     dimensions: EdgeInsets.all(50.0)
         // ),
-
       ),
-    //   textButtonTheme: TextButtonThemeData(
-    //       style: ButtonStyle(
-    //         color: Color(0xFF3C6E71),
+      //   textButtonTheme: TextButtonThemeData(
+      //       style: ButtonStyle(
+      //         color: Color(0xFF3C6E71),
 
-    //       ),
-    //   ),
-        bottomNavigationBarTheme: BottomNavigationBarThemeData(
-            backgroundColor: Color(0xFF284B63),
-            selectedItemColor: Color(0xFFD9D9D9),
-            unselectedLabelStyle: TextStyle(fontSize: 0),
-            // unselectedIconTheme: IconThemeData(size: 36.0),
-            showUnselectedLabels: false,
-        ),
+      //       ),
+      //   ),
+      bottomNavigationBarTheme: BottomNavigationBarThemeData(
+        backgroundColor: Color(0xFF284B63),
+        selectedItemColor: Color(0xFFD9D9D9),
+        unselectedLabelStyle: TextStyle(fontSize: 0),
+        // unselectedIconTheme: IconThemeData(size: 36.0),
+        showUnselectedLabels: false,
+      ),
     );
   }
 }

@@ -42,7 +42,7 @@ class _HomeState extends State<Home> {
   PolylinePoints polylinePoints = PolylinePoints();
   WarehouseLocations warehouseLocations = WarehouseLocations();
 
-  bool showBottomMenu = false;
+  static bool showBottomMenu = false;
   int threshold = 200;
 
   @override
@@ -237,4 +237,3 @@ class _HomeState extends State<Home> {
     showBottomMenu = false;
   }
 }
-
