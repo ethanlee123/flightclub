@@ -13,7 +13,10 @@ import './pages/checkout_summary.dart';
 import './custom_theme.dart';
 import 'blocs/map_bloc.dart';
 
-void main() {
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
+Future main() async {
+  await dotenv.load();
   runApp(FlightClub());
 }
 
