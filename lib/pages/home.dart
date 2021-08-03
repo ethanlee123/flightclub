@@ -45,11 +45,7 @@ class _HomeState extends State<Home> {
   static bool showBottomMenu = false;
   int threshold = 200;
 
-  @override
-  void initState() {
-    super.initState();
-    // polylinePoints = PolylinePoints();
-  }
+  static bool showSearchResults = true;
 
   @override
   Widget build(BuildContext context) {
@@ -78,66 +74,110 @@ class _HomeState extends State<Home> {
             Column(
               children: <Widget>[
                 TextField(
-                  decoration: InputDecoration(labelText: "search"),
+                  decoration: InputDecoration(
+                    labelText: "Find an address",
+                    suffixIcon: Icon(Icons.search),
+                  ),
+                  onTap: () => showSearchResults = true,
+                  onChanged: (value) => {
+                      mapBloc.searchPlaces(value)
+                  },
+                  onEditingComplete: () => {
+                    showSearchResults = false,
+                    FocusScope.of(context).unfocus(),
+                  },
                 ),
                 (mapBloc.loaded)
                     ? Expanded(
-                        child: Container(
-                          height: 300,
-                          child: GoogleMap(
-                            mapType: MapType.normal,
-                            initialCameraPosition: _initialCameraPosition,
-                            zoomControlsEnabled: false,
-                            myLocationEnabled: true,
-                            markers: {
-                              Marker(
-                                position: LatLng(
-                                    warehouseLocations.locations[0].lat,
-                                    warehouseLocations.locations[0].lng),
-                                markerId: MarkerId('warehouse 0'),
-                                icon: BitmapDescriptor.defaultMarkerWithHue(
-                                    BitmapDescriptor.hueGreen),
-                              ),
-                              Marker(
-                                position: LatLng(
-                                    warehouseLocations.locations[1].lat,
-                                    warehouseLocations.locations[1].lng),
-                                markerId: MarkerId('warehouse 1'),
-                                icon: BitmapDescriptor.defaultMarkerWithHue(
-                                    BitmapDescriptor.hueGreen),
-                              ),
-                              Marker(
-                                position: LatLng(
-                                    warehouseLocations.locations[2].lat,
-                                    warehouseLocations.locations[2].lng),
-                                markerId: MarkerId('warehouse 2'),
-                                icon: BitmapDescriptor.defaultMarkerWithHue(
-                                    BitmapDescriptor.hueGreen),
-                              ),
-                              if (mapBloc.prioritizeCurrentLoc)
-                                Marker(
-                                  position: LatLng(
+                        child: Stack(
+                          children: <Widget>[
+                            Container(
+                              //   height: 300,
+                              child: GoogleMap(
+                                mapType: MapType.normal,
+                                initialCameraPosition: _initialCameraPosition,
+                                zoomControlsEnabled: false,
+                                myLocationEnabled: true,
+                                markers: {
+                                  Marker(
+                                    position: LatLng(
+                                        warehouseLocations.locations[0].lat,
+                                        warehouseLocations.locations[0].lng),
+                                    markerId: MarkerId('warehouse 0'),
+                                    icon: BitmapDescriptor.defaultMarkerWithHue(
+                                        BitmapDescriptor.hueGreen),
+                                  ),
+                                  Marker(
+                                    position: LatLng(
+                                        warehouseLocations.locations[1].lat,
+                                        warehouseLocations.locations[1].lng),
+                                    markerId: MarkerId('warehouse 1'),
+                                    icon: BitmapDescriptor.defaultMarkerWithHue(
+                                        BitmapDescriptor.hueGreen),
+                                  ),
+                                  Marker(
+                                    position: LatLng(
+                                        warehouseLocations.locations[2].lat,
+                                        warehouseLocations.locations[2].lng),
+                                    markerId: MarkerId('warehouse 2'),
+                                    icon: BitmapDescriptor.defaultMarkerWithHue(
+                                        BitmapDescriptor.hueGreen),
+                                  ),
+                                  if (mapBloc.prioritizeCurrentLoc)
+                                    Marker(
+                                      position: LatLng(
+                                          mapBloc.currentLocation.latitude,
+                                          mapBloc.currentLocation.longitude),
+                                      markerId: MarkerId('warehouse 0'),
+                                    )
+                                  else
+                                    (dropOffMarker),
+                                },
+                                // Circle/Radius around warehouse locations
+                                circles: warehouseLocationCircles,
+                                onLongPress: (position) => {
+                                  _changeMarker(position),
+                                  mapBloc.changePriority(),
+                                  _setPolylines(
+                                      position.latitude, position.longitude),
+                                },
+                                onMapCreated:
+                                    (GoogleMapController controller) => {
+                                  _assignControllers(controller),
+                                  _setPolylines(
                                       mapBloc.currentLocation.latitude,
                                       mapBloc.currentLocation.longitude),
-                                  markerId: MarkerId('warehouse 0'),
-                                )
-                              else
-                                (dropOffMarker),
-                            },
-                            circles: warehouseLocationCircles,
-                            onLongPress: (position) => {
-                              _changeMarker(position),
-                              mapBloc.changePriority(),
-                              _setPolylines(
-                                  position.latitude, position.longitude),
-                            },
-                            onMapCreated: (controller) => {
-                              {_assignControllers(controller)},
-                              _setPolylines(mapBloc.currentLocation.latitude,
-                                  mapBloc.currentLocation.longitude),
-                            },
-                            polylines: _polylines,
-                          ),
+                                },
+                                polylines: _polylines,
+                              ),
+                            ),
+                            if (mapBloc.searchResults.length != 0 && showSearchResults)
+                              Container(
+                                width: double.infinity,
+                                height: MediaQuery.of(context).size.height / 2,
+                                decoration: BoxDecoration(
+                                  color: Colors.black.withOpacity(0.6),
+                                  backgroundBlendMode: BlendMode.darken,
+                                ),
+                              ),
+                            if (mapBloc.searchResults.length != 0 && showSearchResults)
+                              Container(
+                                width: double.infinity,
+                                height: MediaQuery.of(context).size.height / 2,
+                                child: ListView.builder(
+                                  itemCount: mapBloc.searchResults.length,
+                                  itemBuilder: (context, index) {
+                                    return ListTile(
+                                      title: Text(
+                                        mapBloc
+                                            .searchResults[index].description,
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                          ],
                         ),
                       )
                     : Center(
@@ -173,7 +213,7 @@ class _HomeState extends State<Home> {
     );
   }
 
-  void _assignControllers(controller) {
+  void _assignControllers(GoogleMapController controller) {
     _googleMapController.complete(controller);
   }
 
@@ -235,5 +275,9 @@ class _HomeState extends State<Home> {
 
   void closeBottomMenu() {
     showBottomMenu = false;
+  }
+  void _toggleShowSearchResults() {
+      print(showSearchResults);
+    showSearchResults = !showSearchResults;
   }
 }
