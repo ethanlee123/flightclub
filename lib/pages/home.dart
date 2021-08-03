@@ -1,20 +1,16 @@
 import 'dart:async';
-
 import 'package:flightclub/blocs/map_bloc.dart';
+import 'package:flightclub/models/place_details_result.dart';
 import 'package:flightclub/models/warehouse._locations.dart';
 import 'package:flightclub/pages/components/bottom_drawer.dart';
 import 'package:flightclub/utils/geocoord_distance.dart';
 import 'package:flutter/material.dart';
-
 import 'package:provider/provider.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-
 import 'components/bottom_nav_bar.dart';
-
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
-
 import 'dart:math';
 
 class Home extends StatefulWidget {
@@ -46,6 +42,24 @@ class _HomeState extends State<Home> {
   int threshold = 200;
 
   static bool showSearchResults = true;
+  late StreamSubscription locationSubscription;
+
+  @override
+  void initState() {
+    final mapBloc = Provider.of<MapBloc>(context, listen: false);
+   locationSubscription = mapBloc.selectedLocation.stream.listen((place) {
+      _cameraToPlace(place);
+    });
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    final mapBloc = Provider.of<MapBloc>(context, listen: false);
+    mapBloc.dispose();
+    locationSubscription.cancel();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -79,9 +93,7 @@ class _HomeState extends State<Home> {
                     suffixIcon: Icon(Icons.search),
                   ),
                   onTap: () => showSearchResults = true,
-                  onChanged: (value) => {
-                      mapBloc.searchPlaces(value)
-                  },
+                  onChanged: (value) => {mapBloc.searchPlaces(value)},
                   onEditingComplete: () => {
                     showSearchResults = false,
                     FocusScope.of(context).unfocus(),
@@ -151,7 +163,8 @@ class _HomeState extends State<Home> {
                                 polylines: _polylines,
                               ),
                             ),
-                            if (mapBloc.searchResults.length != 0 && showSearchResults)
+                            if (mapBloc.searchResults.length != 0 &&
+                                showSearchResults)
                               Container(
                                 width: double.infinity,
                                 height: MediaQuery.of(context).size.height / 2,
@@ -160,7 +173,8 @@ class _HomeState extends State<Home> {
                                   backgroundBlendMode: BlendMode.darken,
                                 ),
                               ),
-                            if (mapBloc.searchResults.length != 0 && showSearchResults)
+                            if (mapBloc.searchResults.length != 0 &&
+                                showSearchResults)
                               Container(
                                 width: double.infinity,
                                 height: MediaQuery.of(context).size.height / 2,
@@ -173,6 +187,10 @@ class _HomeState extends State<Home> {
                                             .searchResults[index].description,
                                         style: TextStyle(color: Colors.white),
                                       ),
+                                      onTap: () {
+                                        mapBloc.setSelectedLocation(mapBloc
+                                            .searchResults[index].placeId);
+                                      },
                                     );
                                   },
                                 ),
@@ -230,6 +248,20 @@ class _HomeState extends State<Home> {
     );
   }
 
+  Future<void> _cameraToPlace(PlaceDetailsResult place) async {
+    final GoogleMapController controller = await _googleMapController.future;
+
+    controller.animateCamera(
+      CameraUpdate.newCameraPosition(
+        CameraPosition(
+          target:
+              LatLng(place.geometry.location.lat, place.geometry.location.lng),
+          zoom: 14,
+        ),
+      ),
+    );
+  }
+
   void _changeMarker(LatLng pos) {
     setState(() {
       dropOffMarker = Marker(
@@ -275,9 +307,5 @@ class _HomeState extends State<Home> {
 
   void closeBottomMenu() {
     showBottomMenu = false;
-  }
-  void _toggleShowSearchResults() {
-      print(showSearchResults);
-    showSearchResults = !showSearchResults;
   }
 }

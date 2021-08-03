@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:flightclub/models/place_details_result.dart';
 import 'package:flightclub/models/place_search.dart';
 import 'package:flightclub/services/place_service.dart';
 import 'package:flutter/material.dart';
@@ -6,12 +9,14 @@ import '../services/geolocator_service.dart';
 
 class MapBloc with ChangeNotifier {
   final geolocatorService = GeolocatorService();
-  final placesService = PlacesService();
+  final placeService = PlaceService();
 
   late Position currentLocation;
   bool loaded = false;
   bool prioritizeCurrentLoc = true;
   List<PlaceSearch> searchResults = [];
+
+  StreamController<PlaceDetailsResult> selectedLocation = StreamController<PlaceDetailsResult>();
 
   MapBloc() {
     setCurrentLocation();
@@ -30,8 +35,19 @@ class MapBloc with ChangeNotifier {
   }
 
   void searchPlaces(String searchTerm) async {
-    print(searchTerm);
-    searchResults = await placesService.getAutoComplete(searchTerm, this.currentLocation);
+    searchResults = await placeService.getAutoComplete(searchTerm, this.currentLocation);
     notifyListeners();
+  }
+
+  void setSelectedLocation(String placeId) async {
+    selectedLocation.add(await placeService.getPlaceDetails(placeId));
+    searchResults.clear();
+    notifyListeners();
+  }
+
+  @override
+  void dispose() {
+    selectedLocation.close();
+    super.dispose();
   }
 }
