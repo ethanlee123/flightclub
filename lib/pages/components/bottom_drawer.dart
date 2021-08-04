@@ -23,10 +23,11 @@ class _BottomDrawerState extends State<BottomDrawer> {
   @override
   void initState() {
     final mapBloc = Provider.of<MapBloc>(context, listen: false);
-    locationSubscription = mapBloc.selectedLocation.stream.listen((place) async {
+    locationSubscription =
+        mapBloc.selectedLocation.stream.listen((place) async {
       print('bottom drawer, locationSubscription');
       print(place.geometry.location.lat);
-        
+
       dropoff = RemoveLastWord.removeLastWord(place.formattedAddress);
       print(dropoff);
     });
@@ -40,7 +41,6 @@ class _BottomDrawerState extends State<BottomDrawer> {
     locationSubscription.cancel();
     super.dispose();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -59,25 +59,21 @@ class _BottomDrawerState extends State<BottomDrawer> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Container(
-                child: Icon(
-                  Icons.keyboard_arrow_up,
-                  size: 20,
-                  color: Colors.white,
+                child: Center(
+                  child: Icon(
+                    Icons.keyboard_arrow_up,
+                    size: 20,
+                    color: Colors.white,
+                  ),
                 ),
               ),
               SizedBox(height: 10),
-            //   Column(
-
-            //     // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //     children: [
-                  Text('Dropoff: $dropoff',
-                      style: Theme.of(context).primaryTextTheme.bodyText2),
-                  Text('ETA: $eta',
-                      style: Theme.of(context).primaryTextTheme.bodyText2),
-                  Text('Distance: $distance',
-                      style: Theme.of(context).primaryTextTheme.bodyText2),
-                // ],
-            //   ),
+              Text('Dropoff: $dropoff',
+                  style: Theme.of(context).primaryTextTheme.bodyText2),
+              Text('ETA: $eta',
+                  style: Theme.of(context).primaryTextTheme.bodyText2),
+              Text('Distance: $distance',
+                  style: Theme.of(context).primaryTextTheme.bodyText2),
               SizedBox(height: 10.0),
               SizedBox(
                 width: double.infinity,
