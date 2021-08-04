@@ -16,7 +16,7 @@ class BottomDrawer extends StatefulWidget {
 class _BottomDrawerState extends State<BottomDrawer> {
   String dropoff = "";
   String eta = "";
-  String distance = "";
+  double distance = -1;
 
   late StreamSubscription locationSubscription;
   @override
@@ -25,6 +25,8 @@ class _BottomDrawerState extends State<BottomDrawer> {
     locationSubscription =
         mapBloc.selectedLocation.stream.listen((place) async {
       dropoff = place.formattedAddress;
+      distance = mapBloc.getDistNearestWarehouse(
+          place.geometry.location.lat, place.geometry.location.lng, 'km', 2);
     });
     super.initState();
   }
@@ -63,12 +65,24 @@ class _BottomDrawerState extends State<BottomDrawer> {
                 ),
               ),
               SizedBox(height: 10),
-              Text('Dropoff: $dropoff',
-                  style: Theme.of(context).primaryTextTheme.bodyText2),
-              Text('ETA: $eta',
-                  style: Theme.of(context).primaryTextTheme.bodyText2),
-              Text('Distance: $distance',
-                  style: Theme.of(context).primaryTextTheme.bodyText2),
+              Text(
+                'Dropoff: $dropoff',
+                style: Theme.of(context).primaryTextTheme.bodyText2,
+              ),
+              Text(
+                'ETA: $eta',
+                style: Theme.of(context).primaryTextTheme.bodyText2,
+              ),
+              if (distance == -1)
+                Text(
+                  'Find an address',
+                  style: Theme.of(context).primaryTextTheme.bodyText2,
+                )
+              else
+                Text(
+                  'Distance: $distance km',
+                  style: Theme.of(context).primaryTextTheme.bodyText2,
+                ),
               SizedBox(height: 10.0),
               SizedBox(
                 width: double.infinity,

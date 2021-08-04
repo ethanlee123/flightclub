@@ -52,7 +52,7 @@ class MapBloc with ChangeNotifier {
 
   // Calculates the distance of the nearest warehouse in meters.
   // If list distancesToWarehouse in empty, return -1, otherwise return smallest value.
-  double getDistNearestWarehouse(double destLat, double destLng) {
+  double getDistNearestWarehouse(double destLat, double destLng, [String unit = 'm', int roundTo = 2]) {
     // Set destination coordinates
     GeoCoordDistance dist = GeoCoordDistance(destLat, destLng);
     WarehouseLocations warehouseLocations = WarehouseLocations();
@@ -68,7 +68,18 @@ class MapBloc with ChangeNotifier {
 
     if(distancesToWarehouse.length >= 1) {
       getDistanceInMeters = distancesToWarehouse.reduce(min);
-      return getDistanceInMeters;
+      double rounded;
+      if (unit == 'km') {
+        double distInKm = getDistanceInMeters / 1000;
+        rounded = double.parse((distInKm.toStringAsFixed(roundTo)));
+        return rounded;
+      } else {
+        // if roundTo == -1, don't round. Keep decimals.
+        if (roundTo == -1) {
+          return getDistanceInMeters;
+        }
+        return double.parse((getDistanceInMeters).toStringAsFixed(roundTo));
+      }
     }
     return -1;
   }
@@ -76,14 +87,8 @@ class MapBloc with ChangeNotifier {
   // Calculates distance of nearest warehouse using helper method.
   // if list distancesToWarehouse is empty, return -1, otherwise return index of smallest value.
   int getIndexOfNearestWarehouse(double destLat, double destLng) {
-    double distance = getDistNearestWarehouse(destLat, destLng);
+    double distance = getDistNearestWarehouse(destLat, destLng, 'm', -1);
     int index = distancesToWarehouse.indexOf(distance);
     return index;
   }
-
-  // @override
-  // void dispose() {
-  //   selectedLocation.close();
-  //   super.dispose();
-  // }
 }

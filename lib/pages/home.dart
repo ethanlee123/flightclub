@@ -3,15 +3,12 @@ import 'package:flightclub/blocs/map_bloc.dart';
 import 'package:flightclub/models/place_details_result.dart';
 import 'package:flightclub/models/warehouse._locations.dart';
 import 'package:flightclub/pages/components/bottom_drawer.dart';
-import 'package:flightclub/utils/geocoord_distance.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:http/http.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'components/bottom_nav_bar.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
-import 'dart:math';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -284,17 +281,6 @@ class _HomeState extends State<Home> {
   }
 
   Future<void> _setPolylines(MapBloc mapBloc, double destLat, double destLng) async {
-    // List<double> distances = [];
-    // GeoCoordDistance dist = GeoCoordDistance(destLat, destLng);
-
-    // Calculate distances to warehouses
-    // warehouseLocations.locations.forEach((warehouse) {
-    //   double distance = dist.getDistanceInMeters(warehouse.lat, warehouse.lng);
-    //   distances.add(distance);
-    // });
-
-    // Find index of shortest distance
-    // int index = distances.indexOf(distances.reduce(min));
     int index = mapBloc.getIndexOfNearestWarehouse(destLat, destLng);
 
     polylineCoords.clear();
