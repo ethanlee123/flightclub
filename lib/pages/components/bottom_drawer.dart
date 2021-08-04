@@ -25,11 +25,7 @@ class _BottomDrawerState extends State<BottomDrawer> {
     final mapBloc = Provider.of<MapBloc>(context, listen: false);
     locationSubscription =
         mapBloc.selectedLocation.stream.listen((place) async {
-      print('bottom drawer, locationSubscription');
-      print(place.geometry.location.lat);
-
-      dropoff = RemoveLastWord.removeLastWord(place.formattedAddress);
-      print(dropoff);
+      dropoff = place.formattedAddress;
     });
     super.initState();
   }

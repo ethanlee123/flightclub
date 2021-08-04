@@ -39,6 +39,7 @@ class _HomeState extends State<Home> {
   WarehouseLocations warehouseLocations = WarehouseLocations();
 
   static bool showBottomMenu = false;
+  // Minimum pixels swiping distance to open bottom drawer
   int threshold = 200;
 
   static bool showSearchResults = true;
@@ -49,6 +50,8 @@ class _HomeState extends State<Home> {
     final mapBloc = Provider.of<MapBloc>(context, listen: false);
     locationSubscription = mapBloc.selectedLocation.stream.listen((place) {
       _cameraToPlace(place);
+      _changeMarker(place.geometry.location.lat, place.geometry.location.lng);
+      _setPolylines(place.geometry.location.lat, place.geometry.location.lng);
     });
     super.initState();
   }
@@ -153,7 +156,8 @@ class _HomeState extends State<Home> {
                                   // Circle/Radius around warehouse locations
                                   circles: warehouseLocationCircles,
                                   onLongPress: (position) => {
-                                    _changeMarker(position),
+                                    _changeMarker(
+                                        position.latitude, position.longitude),
                                     mapBloc.changePriority(),
                                     _setPolylines(
                                         position.latitude, position.longitude),
@@ -270,11 +274,11 @@ class _HomeState extends State<Home> {
     );
   }
 
-  void _changeMarker(LatLng pos) {
+  void _changeMarker(double lat, double lng) {
     setState(() {
       dropOffMarker = Marker(
         markerId: MarkerId("dropOff"),
-        position: pos,
+        position: LatLng(lat, lng),
       );
     });
   }
@@ -309,8 +313,7 @@ class _HomeState extends State<Home> {
     });
 
     // Move camera to new position
-    _cameraToLocation(warehouseLocations.locations[index].lat,
-        warehouseLocations.locations[index].lng);
+    _cameraToLocation(destLat, destLng);
   }
 
   void closeBottomMenu() {
@@ -319,6 +322,5 @@ class _HomeState extends State<Home> {
 
   void _onTapSearchResult(MapBloc mapBloc, int index) {
     mapBloc.setSelectedLocation(mapBloc.searchResults[index].placeId);
-    print(mapBloc.selectedLocation.toString());
   }
 }

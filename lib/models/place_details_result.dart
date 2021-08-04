@@ -1,4 +1,5 @@
 import 'package:flightclub/models/place_details_geometry.dart';
+import 'package:flightclub/utils/remove_last_word.dart';
 
 class PlaceDetailsResult {
   final PlaceDetailsGeometry geometry;
@@ -13,7 +14,7 @@ class PlaceDetailsResult {
   factory PlaceDetailsResult.fromJson(Map<String, dynamic> parsedJson) {
     return PlaceDetailsResult(
         geometry: PlaceDetailsGeometry.fromJson(parsedJson['geometry']),
-        formattedAddress: parsedJson['formatted_address'],
+        formattedAddress: RemoveLastWord.removeLastWord(parsedJson['formatted_address']),
         vicinity: parsedJson['vicinity']);
   }
 }

@@ -26,7 +26,6 @@ class MapBloc with ChangeNotifier {
   void setCurrentLocation() async {
     currentLocation = await geolocatorService.getCurrentLocation();
     loaded = true;
-    // Notify UI of change
     notifyListeners();
   }
 
@@ -41,13 +40,14 @@ class MapBloc with ChangeNotifier {
 
   void setSelectedLocation(String placeId) async {
     selectedLocation.add(await placeService.getPlaceDetails(placeId));
+    // When a search result is tapped, lear the list so search results on home page are hidden
     searchResults.clear();
     notifyListeners();
   }
 
-  @override
-  void dispose() {
-    selectedLocation.close();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   selectedLocation.close();
+  //   super.dispose();
+  // }
 }
