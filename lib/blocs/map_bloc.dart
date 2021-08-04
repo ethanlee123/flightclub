@@ -16,7 +16,7 @@ class MapBloc with ChangeNotifier {
   bool prioritizeCurrentLoc = true;
   List<PlaceSearch> searchResults = [];
 
-  StreamController<PlaceDetailsResult> selectedLocation = StreamController<PlaceDetailsResult>();
+  StreamController<PlaceDetailsResult> selectedLocation = StreamController<PlaceDetailsResult>.broadcast();
 
   MapBloc() {
     setCurrentLocation();
