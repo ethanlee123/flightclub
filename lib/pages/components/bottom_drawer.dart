@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flightclub/blocs/map_bloc.dart';
-import 'package:flightclub/utils/remove_last_word.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

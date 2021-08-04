@@ -51,7 +51,7 @@ class _HomeState extends State<Home> {
     locationSubscription = mapBloc.selectedLocation.stream.listen((place) {
       _cameraToPlace(place);
       _changeMarker(place.geometry.location.lat, place.geometry.location.lng);
-      _setPolylines(place.geometry.location.lat, place.geometry.location.lng);
+      _setPolylines(mapBloc, place.geometry.location.lat, place.geometry.location.lng);
     });
     super.initState();
   }
@@ -159,13 +159,13 @@ class _HomeState extends State<Home> {
                                     _changeMarker(
                                         position.latitude, position.longitude),
                                     mapBloc.changePriority(),
-                                    _setPolylines(
+                                    _setPolylines(mapBloc, 
                                         position.latitude, position.longitude),
                                   },
                                   onMapCreated:
                                       (GoogleMapController controller) => {
                                     _assignControllers(controller),
-                                    _setPolylines(
+                                    _setPolylines(mapBloc, 
                                         mapBloc.currentLocation.latitude,
                                         mapBloc.currentLocation.longitude),
                                   },
@@ -283,18 +283,19 @@ class _HomeState extends State<Home> {
     });
   }
 
-  Future<void> _setPolylines(double destLat, double destLng) async {
-    List<double> distances = [];
-    GeoCoordDistance dist = GeoCoordDistance(destLat, destLng);
+  Future<void> _setPolylines(MapBloc mapBloc, double destLat, double destLng) async {
+    // List<double> distances = [];
+    // GeoCoordDistance dist = GeoCoordDistance(destLat, destLng);
 
     // Calculate distances to warehouses
-    warehouseLocations.locations.forEach((warehouse) {
-      double distance = dist.getDistanceInMeters(warehouse.lat, warehouse.lng);
-      distances.add(distance);
-    });
+    // warehouseLocations.locations.forEach((warehouse) {
+    //   double distance = dist.getDistanceInMeters(warehouse.lat, warehouse.lng);
+    //   distances.add(distance);
+    // });
 
     // Find index of shortest distance
-    int index = distances.indexOf(distances.reduce(min));
+    // int index = distances.indexOf(distances.reduce(min));
+    int index = mapBloc.getIndexOfNearestWarehouse(destLat, destLng);
 
     polylineCoords.clear();
     polylineCoords.add(LatLng(warehouseLocations.locations[index].lat,
