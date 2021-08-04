@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 class BottomDrawer extends StatefulWidget {
   const BottomDrawer({
     Key? key,
@@ -9,6 +10,10 @@ class BottomDrawer extends StatefulWidget {
 }
 
 class _BottomDrawerState extends State<BottomDrawer> {
+  String dropoff = "";
+  String eta = "";
+  String distance = "";
+
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height / 5;
@@ -34,9 +39,11 @@ class _BottomDrawerState extends State<BottomDrawer> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('ETA: ',
+                  Text('Dropoff: $dropoff',
                       style: Theme.of(context).primaryTextTheme.bodyText2),
-                  Text('Distance: ',
+                  Text('ETA: $eta',
+                      style: Theme.of(context).primaryTextTheme.bodyText2),
+                  Text('Distance: $distance',
                       style: Theme.of(context).primaryTextTheme.bodyText2)
                 ],
               ),
@@ -44,16 +51,20 @@ class _BottomDrawerState extends State<BottomDrawer> {
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                    onPressed: () {
-                      Navigator. pushNamed(context, '/checkout');
-                    }, 
-                    child: Text('Proceed'),
-                  ),
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/checkout');
+                  },
+                  child: Text('Proceed'),
+                ),
               ),
             ],
           ),
         ),
       ),
     );
+  }
+
+  void setDropoff(String dropoff) {
+      this.dropoff = dropoff;
   }
 }

@@ -47,7 +47,7 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     final mapBloc = Provider.of<MapBloc>(context, listen: false);
-   locationSubscription = mapBloc.selectedLocation.stream.listen((place) {
+    locationSubscription = mapBloc.selectedLocation.stream.listen((place) {
       _cameraToPlace(place);
     });
     super.initState();
@@ -187,10 +187,7 @@ class _HomeState extends State<Home> {
                                             .searchResults[index].description,
                                         style: TextStyle(color: Colors.white),
                                       ),
-                                      onTap: () {
-                                        mapBloc.setSelectedLocation(mapBloc
-                                            .searchResults[index].placeId);
-                                      },
+                                      onTap: () {_onTapSearchResult(mapBloc, index);},
                                     );
                                   },
                                 ),
@@ -307,5 +304,9 @@ class _HomeState extends State<Home> {
 
   void closeBottomMenu() {
     showBottomMenu = false;
+  }
+
+  void _onTapSearchResult(MapBloc mapBloc, int index) {
+    mapBloc.setSelectedLocation(mapBloc.searchResults[index].placeId);
   }
 }

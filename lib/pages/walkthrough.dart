@@ -69,7 +69,7 @@ class _Carousel extends State<CarouselWithIndicator> {
     return Scaffold(
       backgroundColor: Theme.of(context).accentColor,
       body: Container(
-        padding: EdgeInsets.fromLTRB(0, 0, 0, 15.0),
+        padding: EdgeInsets.fromLTRB(20.0, 0, 20.0, 15.0),
         decoration: BoxDecoration(
             boxShadow: [
               BoxShadow(
@@ -84,7 +84,8 @@ class _Carousel extends State<CarouselWithIndicator> {
               color: Theme.of(context).primaryColor,
             ),
             borderRadius: BorderRadius.vertical(top: Radius.circular(70))),
-        child: Column(children: [
+        child: Column(
+        children: [
           Expanded(
             child: CarouselSlider(
               items: walkthroughSliders.walkthroughSlides,
@@ -101,32 +102,36 @@ class _Carousel extends State<CarouselWithIndicator> {
             ),
           ),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              Row(
-                children: slides.map((entry) {
-                  return GestureDetector(
-                    child: Container(
-                      width: 12.0,
-                      height: 12.0,
-                      margin:
-                          EdgeInsets.symmetric(vertical: 8.0, horizontal: 4.0),
-                      decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color:
-                              (Theme.of(context).brightness == Brightness.dark
-                                  ? Color(0xFF284B63)
-                                  : Color(0xFF284B63).withOpacity(
-                                      _current == entry.key ? 0.9 : 0.4))),
-                    ),
-                  );
-                }).toList(),
+              Flexible(
+                  flex: 2,
+                child: Row(
+                  children: slides.map((entry) {
+                    return GestureDetector(
+                      child: Container(
+                        width: 12.0,
+                        height: 12.0,
+                        margin: EdgeInsets.symmetric(
+                            vertical: 8.0, horizontal: 4.0),
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color:
+                                (Theme.of(context).brightness == Brightness.dark
+                                    ? Color(0xFF284B63)
+                                    : Color(0xFF284B63).withOpacity(
+                                        _current == entry.key ? 0.9 : 0.4))),
+                      ),
+                    );
+                  }).toList(),
+                ),
               ),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, '/login');
-                },
-                child: Text('Get Started'.toUpperCase()),
+              Flexible(
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/login');
+                  },
+                  child: Text('Get Started'.toUpperCase()),
+                ),
               ),
             ],
           ),
