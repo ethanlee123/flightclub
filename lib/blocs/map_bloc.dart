@@ -20,8 +20,9 @@ class MapBloc with ChangeNotifier {
   List<PlaceSearch> searchResults = [];
 
   StreamController<PlaceDetailsResult> selectedLocation = StreamController<PlaceDetailsResult>.broadcast();
+  late PlaceDetailsResult placeDetails;
 
-  List<double> distancesToWarehouse = [];
+  List<double> _distancesToWarehouse = [];
 
   MapBloc() {
     setCurrentLocation();
@@ -44,7 +45,8 @@ class MapBloc with ChangeNotifier {
   }
 
   void setSelectedLocation(String placeId) async {
-    selectedLocation.add(await placeService.getPlaceDetails(placeId));
+    placeDetails = await placeService.getPlaceDetails(placeId);
+    selectedLocation.add(placeDetails);
     // When a search result is tapped, lear the list so search results on home page are hidden
     searchResults.clear();
     notifyListeners();
@@ -58,16 +60,16 @@ class MapBloc with ChangeNotifier {
     WarehouseLocations warehouseLocations = WarehouseLocations();
     double getDistanceInMeters;
 
-    distancesToWarehouse.clear();
+    _distancesToWarehouse.clear();
 
     // Calculate distances to warehouses
     warehouseLocations.locations.forEach((warehouse) {
       double distance = dist.getDistanceInMeters(warehouse.lat, warehouse.lng);
-      distancesToWarehouse.add(distance);
+      _distancesToWarehouse.add(distance);
     });
 
-    if(distancesToWarehouse.length >= 1) {
-      getDistanceInMeters = distancesToWarehouse.reduce(min);
+    if(_distancesToWarehouse.length >= 1) {
+      getDistanceInMeters = _distancesToWarehouse.reduce(min);
       double rounded;
       if (unit == 'km') {
         double distInKm = getDistanceInMeters / 1000;
@@ -88,7 +90,7 @@ class MapBloc with ChangeNotifier {
   // if list distancesToWarehouse is empty, return -1, otherwise return index of smallest value.
   int getIndexOfNearestWarehouse(double destLat, double destLng) {
     double distance = getDistNearestWarehouse(destLat, destLng, 'm', -1);
-    int index = distancesToWarehouse.indexOf(distance);
+    int index = _distancesToWarehouse.indexOf(distance);
     return index;
   }
 }

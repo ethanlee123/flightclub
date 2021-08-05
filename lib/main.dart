@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import './pages/loading.dart';
 import './pages/walkthrough.dart';
@@ -9,11 +10,12 @@ import './pages/signup.dart';
 import './pages/checkout.dart';
 import './pages/edit_profile.dart';
 import './pages/checkout_summary.dart';
+import './pages/browse_products.dart';
 
 import './custom_theme.dart';
 import 'blocs/map_bloc.dart';
 
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+
 
 Future main() async {
   await dotenv.load();
@@ -52,6 +54,7 @@ class _FlightClubState extends State<FlightClub> {
           '/login': (context) => Login(),
           '/signup': (context) => SignUp(),
           '/checkout': (context) => Checkout(),
+          '/browseproducts': (context) => BrowseProducts(),
           '/editprofile': (context) => EditProfile(),
           '/checkoutsummary': (context) => CheckoutSummary(),
         },
