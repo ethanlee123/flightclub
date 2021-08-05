@@ -88,7 +88,7 @@ class _BottomDrawerState extends State<BottomDrawer> {
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, '/checkout');
+                    Navigator.pushNamed(context, '/browseproducts');
                   },
                   child: Text('Proceed'),
                 ),
