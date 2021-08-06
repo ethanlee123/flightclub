@@ -103,8 +103,7 @@ class _Carousel extends State<CarouselWithIndicator> {
           ),
           Row(
             children: [
-              Flexible(
-                  flex: 2,
+              Expanded(
                 child: Row(
                   children: slides.map((entry) {
                     return GestureDetector(
@@ -125,7 +124,7 @@ class _Carousel extends State<CarouselWithIndicator> {
                   }).toList(),
                 ),
               ),
-              Flexible(
+              Expanded(
                 child: ElevatedButton(
                   onPressed: () {
                     Navigator.pushNamed(context, '/login');
