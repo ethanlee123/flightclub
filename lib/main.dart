@@ -9,6 +9,7 @@ import './pages/login.dart';
 import './pages/signup.dart';
 import './pages/checkout.dart';
 import './pages/edit_profile.dart';
+import './pages/profile.dart';
 import './pages/checkout_summary.dart';
 import './pages/browse_products.dart';
 
@@ -46,7 +47,7 @@ class _FlightClubState extends State<FlightClub> {
     return ChangeNotifierProvider(
       create: (context) => MapBloc(),
       child: MaterialApp(
-        initialRoute: '/home',
+        initialRoute: '/walkthrough',
         routes: {
           '/': (context) => Loading(),
           '/walkthrough': (context) => Walkthrough(),
@@ -55,6 +56,7 @@ class _FlightClubState extends State<FlightClub> {
           '/signup': (context) => SignUp(),
           '/checkout': (context) => Checkout(),
           '/browseproducts': (context) => BrowseProducts(),
+          '/profile': (context) => Profile(),
           '/editprofile': (context) => EditProfile(),
           '/checkoutsummary': (context) => CheckoutSummary(),
         },
