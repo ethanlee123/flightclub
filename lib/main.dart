@@ -11,7 +11,7 @@ import './pages/checkout.dart';
 import './pages/edit_profile.dart';
 import './pages/profile.dart';
 import './pages/checkout_summary.dart';
-import './pages/browse_products.dart';
+import 'browse_products/browse_products.dart';
 
 import './custom_theme.dart';
 import 'blocs/map_bloc.dart';

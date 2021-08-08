@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'browse_products.dart';
+import '../browse_products/browse_products.dart';
 import 'map.dart';
 import 'profile.dart';
 

@@ -36,6 +36,9 @@ dependencies:
   flutter_polyline_points: ^1.0.0
   flutter_secure_storage: ^4.2.1
   flutter_dotenv: ^5.0.0
+  flutter_svg: ^0.22.0
+  smooth_page_indicator: ^0.2.3
+  page_indicator: ^0.4.1
 
 dev_dependencies:
   flutter_test:
@@ -60,6 +63,9 @@ flutter:
     - assets/images/mobile_map.png
     - assets/images/drone_art.png
     - assets/images/mountains.png
+    - assets/images/carrot.svg
+    - assets/images/vegs_banner.png
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
