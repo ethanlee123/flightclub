@@ -17,6 +17,7 @@ class CheckoutSummary extends StatelessWidget {
         backgroundColor: themeData.primaryColor,
         appBar: AppBar(
           title: Text("Thank you!", style: themeData.accentTextTheme.headline4),
+          automaticallyImplyLeading: false,
         ),
         body: Padding(
           padding: const EdgeInsets.symmetric(vertical: 50.0, horizontal: 30.0),
@@ -35,7 +36,7 @@ class CheckoutSummary extends StatelessWidget {
               SizedBox(height: 30.0),
               RichText(
                 text: TextSpan(
-                  style: Theme.of(context).primaryTextTheme.bodyText2,
+                  style: Theme.of(context).primaryTextTheme.subtitle2,
                   children: <TextSpan>[
                     TextSpan(
                       text: 'Date: ',
@@ -51,18 +52,19 @@ class CheckoutSummary extends StatelessWidget {
               Text('Drop off contact:',
                   style: themeData.accentTextTheme.subtitle2),
               Text('${checkoutDetails.name}',
-                  style: themeData.primaryTextTheme.bodyText2),
+                  style: themeData.primaryTextTheme.subtitle2),
+              SizedBox(height: 10.0),
               Text('${checkoutDetails.number}',
-                  style: themeData.primaryTextTheme.bodyText2),
+                  style: themeData.primaryTextTheme.subtitle2),
               SizedBox(height: 30.0),
               Text('Drop off location:',
                   style: themeData.accentTextTheme.subtitle2),
               Text('address to be passed from home screen',
-                  style: themeData.primaryTextTheme.bodyText2),
+                  style: themeData.primaryTextTheme.subtitle2),
               SizedBox(height: 30.0),
               Text('Products:', style: themeData.accentTextTheme.subtitle2),
               Text('${checkoutDetails.products.join(', ')}',
-                  style: themeData.primaryTextTheme.bodyText2),
+                  style: themeData.primaryTextTheme.subtitle2),
               SizedBox(height: 30.0),
               ElevatedButton(
                 onPressed: () {
