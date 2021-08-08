@@ -26,7 +26,7 @@ class CustomTheme with ChangeNotifier {
         titleTextStyle: TextStyle(color: Colors.white),
       ),
       primaryColor: Color(0xFF353535), // dark grey
-      accentColor: Color(0xFF3C6E71),
+      accentColor: Color(0xFF3C6E71), //turquoise
       backgroundColor: Color(0xFFD9D9D9),
       primaryTextTheme: TextTheme(
         headline3: TextStyle(
@@ -72,6 +72,15 @@ class CustomTheme with ChangeNotifier {
         headline4: TextStyle(
           fontFamily: 'Caveat',
           fontWeight: FontWeight.bold,
+        ),
+        headline5: TextStyle(
+          color: Color(0xFF3C6E71),
+          fontFamily: 'Caveat',
+          fontWeight: FontWeight.bold,
+        ),
+        subtitle1: TextStyle( //Used in shop tab
+          color: Color(0xFF353535),
+          fontSize: 12.0,
         ),
         subtitle2: TextStyle( // Used in checkout summary page
             color: Color.fromRGBO(217, 217, 217, 0.5),

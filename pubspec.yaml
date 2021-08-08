@@ -37,9 +37,8 @@ dependencies:
   flutter_secure_storage: ^4.2.1
   flutter_dotenv: ^5.0.0
   flutter_svg: ^0.22.0
-  smooth_page_indicator: ^0.2.3
   page_indicator: ^0.4.1
-
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter
