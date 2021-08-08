@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="app.netlify.ethan-lee.flightclub">
+    package="app.netlify.ethanlee123.flightclub">
    <application
         android:label="flightclub"
         android:icon="@mipmap/ic_launcher">

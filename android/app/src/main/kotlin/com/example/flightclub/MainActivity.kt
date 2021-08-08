@@ -1,4 +1,4 @@
-package app.netlify.ethan-lee.flightclub
+package app.netlify.ethanlee123.flightclub
 
 import io.flutter.embedding.android.FlutterActivity
 
