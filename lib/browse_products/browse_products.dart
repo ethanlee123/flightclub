@@ -32,10 +32,10 @@ class _BrowseProductsState extends State<BrowseProducts> {
                 height: 30.0,
                 width: 30.0,
               ),
-              //   SizedBox(height: 5.0),
+
               Text('flightclub'.toUpperCase(),
                   style: themeData.accentTextTheme.headline5),
-              //   SizedBox(height: 10),
+    
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 5.0),
                 child: Row(
@@ -66,15 +66,10 @@ class _BrowseProductsState extends State<BrowseProducts> {
               SizedBox(height: 10),
               _buildSectiontitle('Exclusive Offers', context),
               ExclusiveOffers(),
-              //   SizedBox(height: 10),
-              //   _buildSectiontitle('Best Sellings', () {}),
-              //   BestSellings(),
-              //   SizedBox(height: 10),
-              //   _buildSectiontitle('Groceries', () {}),
-              //   Groceries(),
-              //   SizedBox(height: 10),
-              //   _buildSectiontitle('Meats', () {}),
-              //   Meats(),
+              _buildSectiontitle('Featured', context),
+              ExclusiveOffers(),
+              _buildSectiontitle('All', context),
+
             ],
           ),
         ),

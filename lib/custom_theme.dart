@@ -78,6 +78,12 @@ class CustomTheme with ChangeNotifier {
           fontFamily: 'Caveat',
           fontWeight: FontWeight.bold,
         ),
+        headline6: TextStyle(
+          color: Colors.black,
+        //   fontFamily: 'Caveat',
+          fontWeight: FontWeight.bold,
+          fontSize: 14.0,
+        ),
         subtitle1: TextStyle( //Used in shop tab
           color: Color(0xFF353535),
           fontSize: 12.0,

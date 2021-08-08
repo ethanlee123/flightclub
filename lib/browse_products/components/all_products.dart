@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 // import 'grocery_item.dart';ks
 import 'product_card.dart';
 
-class ExclusiveOffers extends StatelessWidget {
-  ExclusiveOffers({
+class AllProducts extends StatelessWidget {
+  AllProducts({
     Key? key,
   }) : super(key: key);
 
