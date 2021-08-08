@@ -35,7 +35,7 @@ class Login extends StatelessWidget {
                         children: [
                           Text('flightclub'.toUpperCase(),
                               style:
-                                  Theme.of(context).accentTextTheme.headline3),
+                                  Theme.of(context).primaryTextTheme.headline4),
                           ImageIcon(
                             AssetImage('assets/images/drone_art.png'),
                             size: 100.0,
@@ -58,7 +58,7 @@ class Login extends StatelessWidget {
                     //   mainAxisAlignment: MainAxisAlignment.
                     children: <Widget>[
                       Text('Hello, Again!\nWelcome\nBack',
-                          style: Theme.of(context).primaryTextTheme.bodyText1),
+                          style: Theme.of(context).primaryTextTheme.subtitle1),
                       SizedBox(height: 20.0),
                       TextField(
                         decoration: InputDecoration(

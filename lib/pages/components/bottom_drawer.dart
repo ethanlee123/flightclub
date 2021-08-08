@@ -67,28 +67,28 @@ class _BottomDrawerState extends State<BottomDrawer> {
               SizedBox(height: 10),
               Text(
                 'Dropoff: $dropoff',
-                style: Theme.of(context).primaryTextTheme.bodyText2,
+                style: Theme.of(context).primaryTextTheme.subtitle2,
               ),
               Text(
                 'ETA: $eta',
-                style: Theme.of(context).primaryTextTheme.bodyText2,
+                style: Theme.of(context).primaryTextTheme.subtitle2,
               ),
               if (distance == -1)
                 Text(
                   'Find an address',
-                  style: Theme.of(context).primaryTextTheme.bodyText2,
+                  style: Theme.of(context).primaryTextTheme.subtitle2,
                 )
               else
                 Text(
                   'Distance: $distance km',
-                  style: Theme.of(context).primaryTextTheme.bodyText2,
+                  style: Theme.of(context).primaryTextTheme.subtitle2,
                 ),
               SizedBox(height: 10.0),
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, '/browseproducts');
+                    Navigator.pushNamed(context, '/checkout');
                   },
                   child: Text('Proceed'),
                 ),

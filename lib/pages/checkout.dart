@@ -49,7 +49,7 @@ class _CheckoutState extends State<Checkout> {
                   children: [
                     Text.rich(
                       TextSpan(
-                        style: themeData.primaryTextTheme.bodyText2,
+                        style: themeData.primaryTextTheme.subtitle2,
                         children: [
                           WidgetSpan(
                             child: Icon(Icons.location_on_rounded,
@@ -68,7 +68,7 @@ class _CheckoutState extends State<Checkout> {
                             builder: (context, mapBloc, child) {
                           return Text(
                             '${mapBloc.placeDetails.formattedAddress}',
-                            style: themeData.primaryTextTheme.bodyText2,
+                            style: themeData.primaryTextTheme.subtitle2,
                           );
                         }),
                       ),
@@ -76,7 +76,7 @@ class _CheckoutState extends State<Checkout> {
                     SizedBox(height: 30.0),
                     Text(
                       'Recipient Full Name:',
-                      style: themeData.primaryTextTheme.bodyText2,
+                      style: themeData.primaryTextTheme.subtitle2,
                     ),
                     SizedBox(height: 5.0),
                     TextFormField(
@@ -93,7 +93,7 @@ class _CheckoutState extends State<Checkout> {
                     ),
                     SizedBox(height: 15.0),
                     Text('Recipient Contact Number:',
-                        style: themeData.primaryTextTheme.bodyText2),
+                        style: themeData.primaryTextTheme.subtitle2),
                     SizedBox(height: 5.0),
                     TextFormField(
                       // The validator receives the text that the user has entered.

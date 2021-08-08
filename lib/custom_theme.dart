@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 CustomTheme currentTheme = CustomTheme();
@@ -32,15 +34,30 @@ class CustomTheme with ChangeNotifier {
           fontFamily: 'Caveat',
           fontWeight: FontWeight.bold,
         ),
-        bodyText1: TextStyle(
+        headline4: TextStyle(
+          color:  Color(0xFF3C6E71),
+          fontFamily: 'Caveat',
+          fontWeight: FontWeight.bold,
+          fontSize: 48.0,
+        
+        ),
+        subtitle1: TextStyle(
           color: Colors.white,
           fontSize: 24.0,
         ),
-        bodyText2: TextStyle(
+        subtitle2: TextStyle(
           color: Colors.white,
           fontSize: 16.0,
-          fontWeight: FontWeight.bold
         ),
+        // bodyText1: TextStyle(
+        //   color: Colors.white,
+        //   fontSize: 24.0,
+        // ),
+        // bodyText2: TextStyle(
+        //   color: Colors.white,
+        //   fontSize: 16.0,
+        //   fontWeight: FontWeight.bold
+        // ),
         button: TextStyle(
             color: Color(0xFF3C6E71),
             fontSize: 14.0
