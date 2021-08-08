@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -16,10 +17,13 @@ import 'browse_products/browse_products.dart';
 import './custom_theme.dart';
 import 'blocs/map_bloc.dart';
 
-
-
 Future main() async {
   await dotenv.load();
+
+  // Firebase initialization
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+
   runApp(FlightClub());
 }
 

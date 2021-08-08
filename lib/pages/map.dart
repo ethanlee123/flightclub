@@ -9,7 +9,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 
 class Map extends StatefulWidget {
-  const Map({ Key? key }) : super(key: key);
+  const Map({Key? key}) : super(key: key);
 
   @override
   _MapState createState() => _MapState();
@@ -46,7 +46,8 @@ class _MapState extends State<Map> {
     locationSubscription = mapBloc.selectedLocation.stream.listen((place) {
       _cameraToPlace(place);
       _changeMarker(place.geometry.location.lat, place.geometry.location.lng);
-      _setPolylines(mapBloc, place.geometry.location.lat, place.geometry.location.lng);
+      _setPolylines(
+          mapBloc, place.geometry.location.lat, place.geometry.location.lng);
     });
     super.initState();
   }
@@ -154,13 +155,14 @@ class _MapState extends State<Map> {
                                     _changeMarker(
                                         position.latitude, position.longitude),
                                     mapBloc.changePriority(),
-                                    _setPolylines(mapBloc, 
-                                        position.latitude, position.longitude),
+                                    _setPolylines(mapBloc, position.latitude,
+                                        position.longitude),
                                   },
                                   onMapCreated:
                                       (GoogleMapController controller) => {
                                     _assignControllers(controller),
-                                    _setPolylines(mapBloc, 
+                                    _setPolylines(
+                                        mapBloc,
                                         mapBloc.currentLocation.latitude,
                                         mapBloc.currentLocation.longitude),
                                   },
@@ -277,7 +279,8 @@ class _MapState extends State<Map> {
     });
   }
 
-  Future<void> _setPolylines(MapBloc mapBloc, double destLat, double destLng) async {
+  Future<void> _setPolylines(
+      MapBloc mapBloc, double destLat, double destLng) async {
     int index = mapBloc.getIndexOfNearestWarehouse(destLat, destLng);
 
     polylineCoords.clear();

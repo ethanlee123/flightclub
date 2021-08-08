@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "952347673291",
+    "project_id": "flightclubone-8d068",
+    "storage_bucket": "flightclubone-8d068.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:952347673291:android:817498ea8f078dc478d14e",
+        "android_client_info": {
+          "package_name": "app.netlify.ethanlee123.flightclub"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "952347673291-qchigtcdf8ndqrjdpft93cfkls19ttrr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBxpUmVbNpEI_FY9WkBVD2PeAYUGDRwW6I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "952347673291-qchigtcdf8ndqrjdpft93cfkls19ttrr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
