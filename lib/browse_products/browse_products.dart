@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import 'components/all_products.dart';
 import 'components/banner.dart';
 import 'components/exclusive_offers.dart';
 
@@ -69,7 +70,7 @@ class _BrowseProductsState extends State<BrowseProducts> {
               _buildSectiontitle('Featured', context),
               ExclusiveOffers(),
               _buildSectiontitle('All', context),
-
+            //   AllProducts(),
             ],
           ),
         ),

@@ -1,11 +1,5 @@
 import 'package:flightclub/models/product_data.dart';
 import 'package:flutter/material.dart';
-// import 'package:grocery_shop/models/models.dart';
-// import 'package:grocery_shop/screens/details_screen/item_details_screen.dart';
-
-// import '../../../constants.dart';
-// import '../../../mq.dart';
-
 class ProductCard extends StatefulWidget {
   final Product item;
 
@@ -72,7 +66,6 @@ class _ProductCardState extends State<ProductCard> {
                     Container(
                       width: 30.0,
                       height: 30.0,
-                      //   padding: const EdgeInsets.all(7),
                       decoration: BoxDecoration(
                         color: addedToCart
                             ? themeData.backgroundColor
