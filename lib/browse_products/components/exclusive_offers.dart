@@ -1,40 +1,20 @@
 import '../../models/product_data.dart';
 import 'package:flutter/material.dart';
 
-
-// import 'grocery_item.dart';ks
 import 'product_card.dart';
 
-class ExclusiveOffers extends StatelessWidget {
+class ExclusiveOffers extends StatefulWidget {
   ExclusiveOffers({
     Key? key,
   }) : super(key: key);
 
-  final List<Product> _items = [
-    Product(
-      name: 'Organic Bananas',
-      url: 'assets/images/drone_art.png',
-      description: '7pcs',
-      price: 4.99,
-    ),
-    Product(
-      name: 'Red Apple',
-      url: 'assets/images/drone_art.png',
-      description: '1kg',
-      price: 5.99,
-    ),
-    Product(
-      name: 'Red Pepper',
-      url: 'assets/images/drone_art.png',
-      description: '1kg',
-      price: 3.99,
-    ),
-    Product(
-      name: 'Red Apple',
-      url: 'assets/images/drone_art.png',
-      description: '1kg',
-      price: 5.99,
-    ),
+  @override
+  _ExclusiveOffersState createState() => _ExclusiveOffersState();
+}
+
+class _ExclusiveOffersState extends State<ExclusiveOffers> {
+  final List<ProductData> _items = [
+ 
   ];
 
   @override

@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 
 CustomTheme currentTheme = CustomTheme();
@@ -125,17 +123,8 @@ class CustomTheme with ChangeNotifier {
         filled: true,
         fillColor: Colors.white,
         contentPadding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 20.0),
-        // border: InputBorder(
-        //     top: BorderSide(width: 50),
-        //     dimensions: EdgeInsets.all(50.0)
-        // ),
       ),
-      //   textButtonTheme: TextButtonThemeData(
-      //       style: ButtonStyle(
-      //         color: Color(0xFF3C6E71),
-
-      //       ),
-      //   ),
+ 
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
         backgroundColor: Color(0xFF284B63),
         selectedItemColor: Color(0xFFD9D9D9),

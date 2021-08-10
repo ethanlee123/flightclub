@@ -14,4 +14,5 @@ class FirebaseQuery {
 
     return productLimit.startAfterDocument(startAfter).get();
   }
+
 }

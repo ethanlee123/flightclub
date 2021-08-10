@@ -1,7 +1,8 @@
-import 'package:flightclub/models/product_data.dart';
 import 'package:flutter/material.dart';
+
+import '../../models/product_data.dart';
 class ProductCard extends StatefulWidget {
-  final Product item;
+  final ProductData item;
 
   ProductCard({
     Key? key,
@@ -45,7 +46,7 @@ class _ProductCardState extends State<ProductCard> {
                 Hero(
                   tag: widget.item.hashCode,
                   child: Image.asset(
-                    widget.item.url,
+                    widget.item.image,
                     height: constraints.maxHeight * 0.4,
                   ),
                 ),
