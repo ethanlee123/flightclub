@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../models/product_data.dart';
+
 class ProductCard extends StatefulWidget {
   final ProductData item;
 
@@ -35,7 +36,7 @@ class _ProductCardState extends State<ProductCard> {
                 color: Colors.grey.withOpacity(0.5),
                 spreadRadius: 3,
                 blurRadius: 4,
-                offset: Offset(4, 3), 
+                offset: Offset(4, 3),
               )
             ]),
         child: LayoutBuilder(
@@ -46,7 +47,7 @@ class _ProductCardState extends State<ProductCard> {
                 Hero(
                   tag: widget.item.hashCode,
                   child: Image.asset(
-                    _imagePath(),
+                    widget.item.image,
                     height: constraints.maxHeight * 0.4,
                   ),
                 ),
@@ -54,11 +55,14 @@ class _ProductCardState extends State<ProductCard> {
                 Text(widget.item.name,
                     overflow: TextOverflow.ellipsis,
                     style: themeData.accentTextTheme.headline6),
-                Text(
-                  widget.item.description,
-                  style: themeData.accentTextTheme.subtitle1,
+                Expanded(
+                  child: Text(
+                    widget.item.description,
+                    overflow: TextOverflow.fade,
+                    style: themeData.accentTextTheme.subtitle1,
+                  ),
                 ),
-                Spacer(),
+                // Spacer(),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -97,13 +101,5 @@ class _ProductCardState extends State<ProductCard> {
     setState(() {
       addedToCart = !addedToCart;
     });
-  }
-
-  String _imagePath() {
-      try{
-        return widget.item.image;      
-      } catch (error) {
-        return 'assets/images/drone_art.png';
-      }
   }
 }

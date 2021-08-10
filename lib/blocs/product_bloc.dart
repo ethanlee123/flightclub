@@ -5,7 +5,12 @@ import 'package:flutter/material.dart';
 import '../models/firebase_query.dart';
 
 class ProductBloc extends ChangeNotifier {
+  // Contains all products
   final _productSnapshot = <DocumentSnapshot>[];
+  // Contains only featured products
+  final _productFeaturedSnapshot = <DocumentSnapshot>[];
+  // Contains only exclusive products
+  final _productExclusiveSnapshot = <DocumentSnapshot>[];
   String _errorMessage = '';
   int documentLimit = 10;
   bool _hasNext = true;
@@ -14,6 +19,7 @@ class ProductBloc extends ChangeNotifier {
   bool get hasNext {
     return _hasNext;
   }
+
   String get errorMessage {
     return _errorMessage;
   }
@@ -33,7 +39,38 @@ class ProductBloc extends ChangeNotifier {
           image: product['image'],
         );
       }).toList();
+  List<ProductData> get featuredProductData => _productFeaturedSnapshot.map((snap) {
+        final Map<String, dynamic> product =
+            snap.data() as Map<String, dynamic>;
 
+        return ProductData(
+          category: product['category'],
+          description: product['description'],
+          exclusive: product['exclusive'],
+          featured: product['featured'],
+          name: product['name'],
+          price: product['price'],
+          sku: product['sku'],
+          image: product['image'],
+        );
+      }).toList();
+  List<ProductData> get exclusiveProductData => _productExclusiveSnapshot.map((snap) {
+        final Map<String, dynamic> product =
+            snap.data() as Map<String, dynamic>;
+
+        return ProductData(
+          category: product['category'],
+          description: product['description'],
+          exclusive: product['exclusive'],
+          featured: product['featured'],
+          name: product['name'],
+          price: product['price'],
+          sku: product['sku'],
+          image: product['image'],
+        );
+      }).toList();
+
+  // Retreive all products
   Future fetchNextProducts() async {
     if (_isFetchingProducts) return;
 
@@ -54,6 +91,38 @@ class ProductBloc extends ChangeNotifier {
     }
 
     _isFetchingProducts = false;
+  }
+
+  // Retrieve either exclusive or featured products.
+  // Special can be either "exclusive" or "featured"
+  Future fetchSpecialProducts(String special) async {
+    try {
+      // Reads firestore collection products
+      final snap =
+          await FirebaseQuery.getSpecialProducts(documentLimit, special);
+      switch (special) {
+        case 'featured':
+          {
+            _productFeaturedSnapshot.addAll(snap.docs);
+          }
+          break;
+        case 'exclusive':
+          {
+            _productExclusiveSnapshot.addAll(snap.docs);
+          }
+          break;
+        default:
+          {
+            _productSnapshot.addAll(snap.docs);
+          }
+          break;
+      }
+      print('notifying listeners');
+      notifyListeners();
+    } catch (error) {
+      _errorMessage = error.toString();
+      notifyListeners();
+    }
   }
 
   Future massWriteProducts() async {

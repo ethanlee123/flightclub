@@ -1,11 +1,18 @@
+import 'package:flightclub/blocs/product_bloc.dart';
+
 import '../../models/product_data.dart';
 import 'package:flutter/material.dart';
 
 import 'product_card.dart';
 
 class ExclusiveOffers extends StatefulWidget {
+  final ProductBloc productBloc;
+  final String special;
+
   ExclusiveOffers({
     Key? key,
+    required this.productBloc,
+    required this.special,
   }) : super(key: key);
 
   @override
@@ -13,9 +20,28 @@ class ExclusiveOffers extends StatefulWidget {
 }
 
 class _ExclusiveOffersState extends State<ExclusiveOffers> {
-  final List<ProductData> _items = [
- 
-  ];
+  late final List<ProductData> _items;
+
+  @override
+  void initState() {
+    setItems();
+    super.initState();
+  }
+
+  void setItems() {
+    switch (widget.special) {
+      case 'featured':
+        {
+          _items = widget.productBloc.featuredProductData;
+        }
+        break;
+      case 'exclusive':
+        {
+          _items = widget.productBloc.exclusiveProductData;
+        }
+        break;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

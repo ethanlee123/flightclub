@@ -22,6 +22,8 @@ class _BrowseProductsState extends State<BrowseProducts> {
   void initState() {
     print('initializing browse product page');
     
+    productBloc.fetchSpecialProducts('exclusive');
+    productBloc.fetchSpecialProducts('featured');
     productBloc.fetchNextProducts();
     scrollController.addListener(scrollListener);
 
@@ -101,11 +103,11 @@ class _BrowseProductsState extends State<BrowseProducts> {
                   Banners(),
                   SizedBox(height: 10),
                   _buildSectiontitle('Exclusive Offers', context),
-                  ExclusiveOffers(),
+                  ExclusiveOffers(productBloc: productBloc, special: 'exclusive'),
                   _buildSectiontitle('Featured', context),
-                  ExclusiveOffers(),
+                  ExclusiveOffers(productBloc: productBloc, special: 'featured'),
                   _buildSectiontitle('All', context),
-                  //   AllProducts(),
+                  
                 ],
               ),
             ),

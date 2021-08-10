@@ -15,6 +15,34 @@ class FirebaseQuery {
     return productLimit.startAfterDocument(startAfter).get();
   }
 
+  static Future<QuerySnapshot> getSpecialProducts(
+      int limit, String special) async {
+    final productFiltered;
+
+    switch (special) {
+      case 'featured':
+        {
+          productFiltered =
+              productCollection.where('featured', isEqualTo: true);
+        }
+        break;
+      case 'exclusive':
+        {
+          productFiltered =
+              productCollection.where('exclusive', isEqualTo: true);
+        }
+        break;
+      default:
+        {
+          productFiltered = productCollection;
+        }
+        break;
+    }
+    final productLimited = productFiltered.limit(limit);
+
+    return productLimited.get();
+  }
+
   static Future<void> massWriteProducts() async {
     List<Map<String, dynamic>> prods = [
       {
