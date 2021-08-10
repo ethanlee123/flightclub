@@ -55,4 +55,8 @@ class ProductBloc extends ChangeNotifier {
 
     _isFetchingProducts = false;
   }
+
+  Future massWriteProducts() async {
+    FirebaseQuery.massWriteProducts();
+  }
 }

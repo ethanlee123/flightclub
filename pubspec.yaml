@@ -68,6 +68,10 @@ flutter:
     - assets/images/mountains.png
     - assets/images/carrot.svg
     - assets/images/vegs_banner.png
+    - assets/images/home.png
+    - assets/images/miscellaneous.png
+    - assets/images/computer.png
+    - assets/images/fruit.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

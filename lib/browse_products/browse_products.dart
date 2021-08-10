@@ -24,6 +24,7 @@ class _BrowseProductsState extends State<BrowseProducts> {
     
     productBloc.fetchNextProducts();
     scrollController.addListener(scrollListener);
+
     super.initState();
   }
 

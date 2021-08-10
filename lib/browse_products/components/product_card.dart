@@ -46,7 +46,7 @@ class _ProductCardState extends State<ProductCard> {
                 Hero(
                   tag: widget.item.hashCode,
                   child: Image.asset(
-                    widget.item.image,
+                    _imagePath(),
                     height: constraints.maxHeight * 0.4,
                   ),
                 ),
@@ -97,5 +97,13 @@ class _ProductCardState extends State<ProductCard> {
     setState(() {
       addedToCart = !addedToCart;
     });
+  }
+
+  String _imagePath() {
+      try{
+        return widget.item.image;      
+      } catch (error) {
+        return 'assets/images/drone_art.png';
+      }
   }
 }
