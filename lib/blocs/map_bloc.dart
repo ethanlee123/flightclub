@@ -19,13 +19,18 @@ class MapBloc with ChangeNotifier {
   bool prioritizeCurrentLoc = true;
   List<PlaceSearch> searchResults = [];
 
-  StreamController<PlaceDetailsResult> selectedLocation = StreamController<PlaceDetailsResult>.broadcast();
-  late PlaceDetailsResult placeDetails;
+  StreamController<PlaceDetailsResult?> selectedLocation =
+      StreamController<PlaceDetailsResult?>.broadcast();
+  PlaceDetailsResult? _placeDetails;
 
   List<double> _distancesToWarehouse = [];
 
   MapBloc() {
     setCurrentLocation();
+  }
+
+  PlaceDetailsResult? get placeDetails {
+    return _placeDetails;
   }
 
   // Get current location of user and set variable currentLocation
@@ -40,13 +45,14 @@ class MapBloc with ChangeNotifier {
   }
 
   void searchPlaces(String searchTerm) async {
-    searchResults = await placeService.getAutoComplete(searchTerm, this.currentLocation);
+    searchResults =
+        await placeService.getAutoComplete(searchTerm, this.currentLocation);
     notifyListeners();
   }
 
   void setSelectedLocation(String placeId) async {
-    placeDetails = await placeService.getPlaceDetails(placeId);
-    selectedLocation.add(placeDetails);
+    _placeDetails = await placeService.getPlaceDetails(placeId);
+    selectedLocation.add(_placeDetails);
     // When a search result is tapped, lear the list so search results on home page are hidden
     searchResults.clear();
     notifyListeners();
@@ -54,7 +60,8 @@ class MapBloc with ChangeNotifier {
 
   // Calculates the distance of the nearest warehouse in meters.
   // If list distancesToWarehouse in empty, return -1, otherwise return smallest value.
-  double getDistNearestWarehouse(double destLat, double destLng, [String unit = 'm', int roundTo = 2]) {
+  double getDistNearestWarehouse(double destLat, double destLng,
+      [String unit = 'm', int roundTo = 2]) {
     // Set destination coordinates
     GeoCoordDistance dist = GeoCoordDistance(destLat, destLng);
     WarehouseLocations warehouseLocations = WarehouseLocations();
@@ -68,7 +75,7 @@ class MapBloc with ChangeNotifier {
       _distancesToWarehouse.add(distance);
     });
 
-    if(_distancesToWarehouse.length >= 1) {
+    if (_distancesToWarehouse.length >= 1) {
       getDistanceInMeters = _distancesToWarehouse.reduce(min);
       double rounded;
       if (unit == 'km') {

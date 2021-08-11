@@ -67,7 +67,7 @@ class _CheckoutState extends State<Checkout> {
                         child: Consumer<MapBloc>(
                             builder: (context, mapBloc, child) {
                           return Text(
-                            '${mapBloc.placeDetails.formattedAddress}',
+                            '${mapBloc.placeDetails!.formattedAddress}',
                             style: themeData.primaryTextTheme.subtitle2,
                           );
                         }),

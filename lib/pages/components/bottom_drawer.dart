@@ -24,7 +24,7 @@ class _BottomDrawerState extends State<BottomDrawer> {
     final mapBloc = Provider.of<MapBloc>(context, listen: false);
     locationSubscription =
         mapBloc.selectedLocation.stream.listen((place) async {
-      dropoff = place.formattedAddress;
+      dropoff = place!.formattedAddress;
       distance = mapBloc.getDistNearestWarehouse(
           place.geometry.location.lat, place.geometry.location.lng, 'km', 2);
     });
@@ -41,6 +41,8 @@ class _BottomDrawerState extends State<BottomDrawer> {
 
   @override
   Widget build(BuildContext context) {
+    final mapBloc = Provider.of<MapBloc>(context);
+
     double height = MediaQuery.of(context).size.height / 5;
     double width = MediaQuery.of(context).size.width;
 
@@ -84,19 +86,33 @@ class _BottomDrawerState extends State<BottomDrawer> {
                   style: Theme.of(context).primaryTextTheme.subtitle2,
                 ),
               SizedBox(height: 10.0),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/checkout');
-                  },
-                  child: Text('Proceed'),
-                ),
-              ),
+              _buildProceedButton(context, mapBloc),
             ],
           ),
         ),
       ),
     );
+  }
+
+  Widget _buildProceedButton(BuildContext context, MapBloc mapBloc) {
+    if (mapBloc.placeDetails == null) {
+      return SizedBox(
+        width: double.infinity,
+        child: ElevatedButton(
+          onPressed: null,
+          child: Text('Search and Select a drop off location'),
+        ),
+      );
+    } else {
+      return SizedBox(
+        width: double.infinity,
+        child: ElevatedButton(
+          onPressed: () {
+            Navigator.pushNamed(context, '/browseproducts');
+          },
+          child: Text('Go Shopping!'),
+        ),
+      );
+    }
   }
 }

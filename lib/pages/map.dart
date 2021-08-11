@@ -45,7 +45,7 @@ class _MapState extends State<Map> {
     final mapBloc = Provider.of<MapBloc>(context, listen: false);
     locationSubscription = mapBloc.selectedLocation.stream.listen((place) {
       _cameraToPlace(place);
-      _changeMarker(place.geometry.location.lat, place.geometry.location.lng);
+      _changeMarker(place!.geometry.location.lat, place.geometry.location.lng);
       _setPolylines(
           mapBloc, place.geometry.location.lat, place.geometry.location.lng);
     });
@@ -64,6 +64,7 @@ class _MapState extends State<Map> {
   Widget build(BuildContext context) {
     final mapBloc = Provider.of<MapBloc>(context);
 
+    print(mapBloc.placeDetails ?? 'this null');
     // print(mapBloc.loaded);
     // GeoCoordDistance geoCoordDist = GeoCoordDistance(
     //     mapBloc.currentLocation.latitude,
@@ -256,14 +257,14 @@ class _MapState extends State<Map> {
     );
   }
 
-  Future<void> _cameraToPlace(PlaceDetailsResult place) async {
+  Future<void> _cameraToPlace(PlaceDetailsResult? place) async {
     final GoogleMapController controller = await _googleMapController.future;
 
     controller.animateCamera(
       CameraUpdate.newCameraPosition(
         CameraPosition(
           target:
-              LatLng(place.geometry.location.lat, place.geometry.location.lng),
+              LatLng(place!.geometry.location.lat, place.geometry.location.lng),
           zoom: 14,
         ),
       ),
