@@ -12,6 +12,7 @@ class Banners extends StatefulWidget {
 class _BannersState extends State<Banners> with SingleTickerProviderStateMixin {
   late PageController controller;
   GlobalKey<PageContainerState> key = GlobalKey();
+//   int _carouselLength = 3;
   
   final List<Widget> _banners = List.generate(
     3,
@@ -47,7 +48,7 @@ class _BannersState extends State<Banners> with SingleTickerProviderStateMixin {
             controller: controller,
         ),
         align: IndicatorAlign.bottom,
-        length: 3,
+        length: _banners.length,
         indicatorSpace: 5.0,
         padding: const EdgeInsets.all(12),
         indicatorColor: Theme.of(context).backgroundColor,
