@@ -54,55 +54,57 @@ class _BrowseProductsState extends State<BrowseProducts> {
     ThemeData themeData = Theme.of(context);
 
     return SafeArea(
-      child: Container(
-        padding: EdgeInsets.only(top: 20, bottom: 10),
-        color: themeData.backgroundColor,
-        width: double.infinity,
-        height: MediaQuery.of(context).size.height,
-        child: CustomScrollView(
-          controller: scrollController,
-          slivers: [
-            SliverList(
-              delegate: SliverChildListDelegate(
-                [
-                  SizedBox(
-                    child: SvgPicture.asset('assets/images/carrot.svg'),
-                    height: 30.0,
-                    width: 30.0,
-                  ),
-                  Text('flightclub'.toUpperCase(),
-                      style: themeData.accentTextTheme.headline5,
-                      textAlign: TextAlign.center),
-                  _shopMenu(context),
-                  Banners(),
-                  SizedBox(height: 10),
-                  _buildSectiontitle('Exclusive Offers', context),
-                  SpecialOffers(productList: productBloc.exclusiveProductData),
-                  _buildSectiontitle('Featured', context),
-                  SpecialOffers(productList: productBloc.featuredProductData),
-                  _buildSectiontitle('All', context),
-                ],
-              ),
-            ),
-            AllProducts(productBloc: productBloc),
-            if (productBloc.hasNext)
+      child: Scaffold(
+        body: Container(
+          padding: EdgeInsets.only(top: 20, bottom: 10),
+          color: themeData.backgroundColor,
+          width: double.infinity,
+          height: MediaQuery.of(context).size.height,
+          child: CustomScrollView(
+            controller: scrollController,
+            slivers: [
               SliverList(
                 delegate: SliverChildListDelegate(
                   [
-                    Center(
-                      child: GestureDetector(
-                        onTap: productBloc.fetchNextProducts,
-                        child: Container(
-                          height: 25,
-                          width: 25,
-                          child: CircularProgressIndicator(),
-                        ),
-                      ),
+                    SizedBox(
+                      child: SvgPicture.asset('assets/images/carrot.svg'),
+                      height: 30.0,
+                      width: 30.0,
                     ),
+                    Text('flightclub'.toUpperCase(),
+                        style: themeData.accentTextTheme.headline5,
+                        textAlign: TextAlign.center),
+                    _shopMenu(context),
+                    Banners(),
+                    SizedBox(height: 10),
+                    _buildSectiontitle('Exclusive Offers', context),
+                    SpecialOffers(productList: productBloc.exclusiveProductData),
+                    _buildSectiontitle('Featured', context),
+                    SpecialOffers(productList: productBloc.featuredProductData),
+                    _buildSectiontitle('All', context),
                   ],
                 ),
               ),
-          ],
+              AllProducts(productBloc: productBloc),
+              if (productBloc.hasNext)
+                SliverList(
+                  delegate: SliverChildListDelegate(
+                    [
+                      Center(
+                        child: GestureDetector(
+                          onTap: productBloc.fetchNextProducts,
+                          child: Container(
+                            height: 25,
+                            width: 25,
+                            child: CircularProgressIndicator(),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+            ],
+          ),
         ),
       ),
     );
