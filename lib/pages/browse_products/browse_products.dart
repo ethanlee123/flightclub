@@ -1,3 +1,4 @@
+import 'package:flightclub/blocs/cart_bloc.dart';
 import 'package:flightclub/blocs/map_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -79,7 +80,8 @@ class _BrowseProductsState extends State<BrowseProducts> {
                     Banners(),
                     SizedBox(height: 10),
                     _buildSectiontitle('Exclusive Offers', context),
-                    SpecialOffers(productList: productBloc.exclusiveProductData),
+                    SpecialOffers(
+                        productList: productBloc.exclusiveProductData),
                     _buildSectiontitle('Featured', context),
                     SpecialOffers(productList: productBloc.featuredProductData),
                     _buildSectiontitle('All', context),
@@ -127,8 +129,10 @@ class _BrowseProductsState extends State<BrowseProducts> {
   }
 
   Widget _shopMenu(BuildContext context) {
-          final mapBloc = Provider.of<MapBloc>(context);
-    String _dropoffLocation = mapBloc.placeDetails!.formattedAddress;
+    final mapBloc = Provider.of<MapBloc>(context);
+    // final cart = Provider.of<CartBloc>(context);
+
+    String _dropoffLocation = mapBloc.placeDetails?.formattedAddress ?? 'Choose Location';
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 5.0),
       child: Row(
