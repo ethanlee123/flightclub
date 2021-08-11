@@ -11,9 +11,11 @@ class ProductBloc extends ChangeNotifier {
   final _productFeaturedSnapshot = <DocumentSnapshot>[];
   // Contains only exclusive products
   final _productExclusiveSnapshot = <DocumentSnapshot>[];
+
   String _errorMessage = '';
   int documentLimit = 5;
   bool _hasNext = true;
+
   bool _isFetchingProducts = false;
 
   bool get hasNext {
@@ -39,7 +41,8 @@ class ProductBloc extends ChangeNotifier {
           image: product['image'],
         );
       }).toList();
-  List<ProductData> get featuredProductData => _productFeaturedSnapshot.map((snap) {
+  List<ProductData> get featuredProductData =>
+      _productFeaturedSnapshot.map((snap) {
         final Map<String, dynamic> product =
             snap.data() as Map<String, dynamic>;
 
@@ -54,7 +57,8 @@ class ProductBloc extends ChangeNotifier {
           image: product['image'],
         );
       }).toList();
-  List<ProductData> get exclusiveProductData => _productExclusiveSnapshot.map((snap) {
+  List<ProductData> get exclusiveProductData =>
+      _productExclusiveSnapshot.map((snap) {
         final Map<String, dynamic> product =
             snap.data() as Map<String, dynamic>;
 
@@ -85,10 +89,9 @@ class ProductBloc extends ChangeNotifier {
 
       _productSnapshot.addAll(snap.docs);
       if (snap.docs.length < documentLimit) _hasNext = false;
-
-      notifyListeners();
     } catch (error) {
       _errorMessage = error.toString();
+    } finally {
       notifyListeners();
     }
 
@@ -100,8 +103,7 @@ class ProductBloc extends ChangeNotifier {
   Future fetchSpecialProducts(String special) async {
     try {
       // Reads firestore collection products
-      final snap =
-          await FirebaseQuery.getSpecialProducts(documentLimit, special);
+      final snap = await FirebaseQuery.getSpecialProducts(10, special);
       switch (special) {
         case 'featured':
           {
@@ -119,9 +121,9 @@ class ProductBloc extends ChangeNotifier {
           }
           break;
       }
-      notifyListeners();
     } catch (error) {
       _errorMessage = error.toString();
+    } finally {
       notifyListeners();
     }
   }

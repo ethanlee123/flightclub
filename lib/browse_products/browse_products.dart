@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 
 import 'components/all_products.dart';
 import 'components/banner.dart';
-import 'components/exclusive_offers.dart';
+import 'components/special_offers.dart';
 import '../blocs/product_bloc.dart';
 
 class BrowseProducts extends StatefulWidget {
@@ -21,10 +21,10 @@ class _BrowseProductsState extends State<BrowseProducts> {
 
   @override
   void initState() {
-    print('initializing browse product page');
     productBloc = Provider.of<ProductBloc>(context, listen: false);
-    // productBloc.fetchSpecialProducts('exclusive');
-    // productBloc.fetchSpecialProducts('featured');
+
+    productBloc.fetchSpecialProducts('exclusive');
+    productBloc.fetchSpecialProducts('featured');
     productBloc.fetchNextProducts();
 
     scrollController.addListener(scrollListener);
@@ -40,12 +40,10 @@ class _BrowseProductsState extends State<BrowseProducts> {
   }
 
   void scrollListener() {
-    if (scrollController.offset >=
-            scrollController.position.maxScrollExtent &&
+    if (scrollController.offset >= scrollController.position.maxScrollExtent &&
         !scrollController.position.outOfRange) {
       if (productBloc.hasNext) {
         productBloc.fetchNextProducts();
-
       }
     }
   }
@@ -75,39 +73,13 @@ class _BrowseProductsState extends State<BrowseProducts> {
                   Text('flightclub'.toUpperCase(),
                       style: themeData.accentTextTheme.headline5,
                       textAlign: TextAlign.center),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        TextButton.icon(
-                          onPressed: () {
-                            Navigator.pushNamed(context, '/home');
-                          },
-                          icon: Icon(Icons.location_on_rounded),
-                          label: Text('$_dropoffLocation'),
-                        ),
-                        Material(
-                          color: Colors.transparent,
-                          child: InkWell(
-                            onTap: () {},
-                            child: IconButton(
-                              icon: Icon(Icons.shopping_cart),
-                              onPressed: () {},
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                  _shopMenu(context),
                   Banners(),
                   SizedBox(height: 10),
                   _buildSectiontitle('Exclusive Offers', context),
-                  ExclusiveOffers(
-                      productBloc: productBloc, special: 'exclusive'),
+                  SpecialOffers(productList: productBloc.exclusiveProductData),
                   _buildSectiontitle('Featured', context),
-                  ExclusiveOffers(
-                      productBloc: productBloc, special: 'featured'),
+                  SpecialOffers(productList: productBloc.featuredProductData),
                   _buildSectiontitle('All', context),
                 ],
               ),
@@ -145,6 +117,34 @@ class _BrowseProductsState extends State<BrowseProducts> {
           Text(
             title,
             style: Theme.of(context).accentTextTheme.subtitle1,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _shopMenu(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 5.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          TextButton.icon(
+            onPressed: () {
+              Navigator.pushNamed(context, '/home');
+            },
+            icon: Icon(Icons.location_on_rounded),
+            label: Text('$_dropoffLocation'),
+          ),
+          Material(
+            color: Colors.transparent,
+            child: InkWell(
+              onTap: () {},
+              child: IconButton(
+                icon: Icon(Icons.shopping_cart),
+                onPressed: () {},
+              ),
+            ),
           ),
         ],
       ),
