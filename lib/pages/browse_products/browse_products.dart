@@ -1,3 +1,4 @@
+import 'package:flightclub/blocs/map_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
@@ -15,7 +16,6 @@ class BrowseProducts extends StatefulWidget {
 }
 
 class _BrowseProductsState extends State<BrowseProducts> {
-  String _dropoffLocation = 'Choose Location';
   late ProductBloc productBloc;
   late ScrollController scrollController = ScrollController();
 
@@ -51,6 +51,7 @@ class _BrowseProductsState extends State<BrowseProducts> {
   @override
   Widget build(BuildContext context) {
     final productBloc = Provider.of<ProductBloc>(context);
+
     ThemeData themeData = Theme.of(context);
 
     return SafeArea(
@@ -126,6 +127,8 @@ class _BrowseProductsState extends State<BrowseProducts> {
   }
 
   Widget _shopMenu(BuildContext context) {
+          final mapBloc = Provider.of<MapBloc>(context);
+    String _dropoffLocation = mapBloc.placeDetails!.formattedAddress;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 5.0),
       child: Row(
