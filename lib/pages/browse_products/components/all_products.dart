@@ -2,8 +2,8 @@
 import 'package:flutter/material.dart';
 
 import 'product_card.dart';
-import '../../blocs/product_bloc.dart';
-import '../../models/product_data.dart';
+import '../../../blocs/product_bloc.dart';
+import '../../../models/product_data.dart';
 
 class AllProducts extends StatefulWidget {
   final ProductBloc productBloc;

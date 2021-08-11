@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'components/all_products.dart';
 import 'components/banner.dart';
 import 'components/special_offers.dart';
-import '../blocs/product_bloc.dart';
+import '../../blocs/product_bloc.dart';
 
 class BrowseProducts extends StatefulWidget {
   const BrowseProducts({Key? key}) : super(key: key);

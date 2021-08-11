@@ -47,7 +47,7 @@ class _BannersState extends State<Banners> with SingleTickerProviderStateMixin {
             controller: controller,
         ),
         align: IndicatorAlign.bottom,
-        length: 4,
+        length: 3,
         indicatorSpace: 5.0,
         padding: const EdgeInsets.all(12),
         indicatorColor: Theme.of(context).backgroundColor,

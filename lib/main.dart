@@ -13,7 +13,7 @@ import './pages/edit_profile.dart';
 import './pages/profile.dart';
 import './pages/checkout_summary.dart';
 import 'blocs/product_bloc.dart';
-import 'browse_products/browse_products.dart';
+import './pages/browse_products/browse_products.dart';
 
 import './custom_theme.dart';
 import 'blocs/map_bloc.dart';
