@@ -12,6 +12,7 @@ import './pages/checkout.dart';
 import './pages/edit_profile.dart';
 import './pages/profile.dart';
 import './pages/checkout_summary.dart';
+import 'blocs/product_bloc.dart';
 import 'browse_products/browse_products.dart';
 
 import './custom_theme.dart';
@@ -48,26 +49,31 @@ class _FlightClubState extends State<FlightClub> {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => MapBloc(),
-      child: MaterialApp(
-        initialRoute: '/home',
-        routes: {
-          '/': (context) => Loading(),
-          '/walkthrough': (context) => Walkthrough(),
-          '/home': (context) => Home(),
-          '/login': (context) => Login(),
-          '/signup': (context) => SignUp(),
-          '/checkout': (context) => Checkout(),
-          '/browseproducts': (context) => BrowseProducts(),
-          '/profile': (context) => Profile(),
-          '/editprofile': (context) => EditProfile(),
-          '/checkoutsummary': (context) => CheckoutSummary(),
-        },
-        theme: CustomTheme.lightTheme,
-        darkTheme: CustomTheme.darkTheme,
-        themeMode: currentTheme.currentTheme,
-      ),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => MapBloc()),
+        ChangeNotifierProvider(create: (context) => ProductBloc()),
+
+      ],
+        child: MaterialApp(
+          initialRoute: '/home',
+          routes: {
+            '/': (context) => Loading(),
+            '/walkthrough': (context) => Walkthrough(),
+            '/home': (context) => Home(),
+            '/login': (context) => Login(),
+            '/signup': (context) => SignUp(),
+            '/checkout': (context) => Checkout(),
+            '/browseproducts': (context) => BrowseProducts(),
+            '/profile': (context) => Profile(),
+            '/editprofile': (context) => EditProfile(),
+            '/checkoutsummary': (context) => CheckoutSummary(),
+          },
+          theme: CustomTheme.lightTheme,
+          darkTheme: CustomTheme.darkTheme,
+          themeMode: currentTheme.currentTheme,
+        ),
+
     );
   }
 }

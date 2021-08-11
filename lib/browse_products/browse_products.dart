@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 import 'components/all_products.dart';
 import 'components/banner.dart';
@@ -15,16 +16,17 @@ class BrowseProducts extends StatefulWidget {
 
 class _BrowseProductsState extends State<BrowseProducts> {
   String _dropoffLocation = 'Choose Location';
-  late ProductBloc productBloc = ProductBloc();
+  late ProductBloc productBloc;
   late ScrollController scrollController = ScrollController();
 
   @override
   void initState() {
     print('initializing browse product page');
-    
-    productBloc.fetchSpecialProducts('exclusive');
-    productBloc.fetchSpecialProducts('featured');
+    productBloc = Provider.of<ProductBloc>(context, listen: false);
+    // productBloc.fetchSpecialProducts('exclusive');
+    // productBloc.fetchSpecialProducts('featured');
     productBloc.fetchNextProducts();
+
     scrollController.addListener(scrollListener);
 
     super.initState();
@@ -32,27 +34,27 @@ class _BrowseProductsState extends State<BrowseProducts> {
 
   @override
   void dispose() {
+    productBloc.dispose();
     scrollController.dispose();
     super.dispose();
   }
 
   void scrollListener() {
-    print('calling scroll listener');
-  
     if (scrollController.offset >=
-            scrollController.position.maxScrollExtent / 2 &&
+            scrollController.position.maxScrollExtent &&
         !scrollController.position.outOfRange) {
       if (productBloc.hasNext) {
         productBloc.fetchNextProducts();
-        print('scrollListener');
-        print(productBloc.hasNext);
+
       }
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final productBloc = Provider.of<ProductBloc>(context);
     ThemeData themeData = Theme.of(context);
+
     return SafeArea(
       child: Container(
         padding: EdgeInsets.only(top: 20, bottom: 10),
@@ -70,11 +72,9 @@ class _BrowseProductsState extends State<BrowseProducts> {
                     height: 30.0,
                     width: 30.0,
                   ),
-
                   Text('flightclub'.toUpperCase(),
                       style: themeData.accentTextTheme.headline5,
                       textAlign: TextAlign.center),
-
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 5.0),
                     child: Row(
@@ -103,15 +103,33 @@ class _BrowseProductsState extends State<BrowseProducts> {
                   Banners(),
                   SizedBox(height: 10),
                   _buildSectiontitle('Exclusive Offers', context),
-                  ExclusiveOffers(productBloc: productBloc, special: 'exclusive'),
+                  ExclusiveOffers(
+                      productBloc: productBloc, special: 'exclusive'),
                   _buildSectiontitle('Featured', context),
-                  ExclusiveOffers(productBloc: productBloc, special: 'featured'),
+                  ExclusiveOffers(
+                      productBloc: productBloc, special: 'featured'),
                   _buildSectiontitle('All', context),
-                  
                 ],
               ),
             ),
             AllProducts(productBloc: productBloc),
+            if (productBloc.hasNext)
+              SliverList(
+                delegate: SliverChildListDelegate(
+                  [
+                    Center(
+                      child: GestureDetector(
+                        onTap: productBloc.fetchNextProducts,
+                        child: Container(
+                          height: 25,
+                          width: 25,
+                          child: CircularProgressIndicator(),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
           ],
         ),
       ),

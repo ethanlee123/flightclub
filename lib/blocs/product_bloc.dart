@@ -12,7 +12,7 @@ class ProductBloc extends ChangeNotifier {
   // Contains only exclusive products
   final _productExclusiveSnapshot = <DocumentSnapshot>[];
   String _errorMessage = '';
-  int documentLimit = 10;
+  int documentLimit = 5;
   bool _hasNext = true;
   bool _isFetchingProducts = false;
 
@@ -82,8 +82,10 @@ class ProductBloc extends ChangeNotifier {
         documentLimit,
         startAfter: _productSnapshot.isNotEmpty ? _productSnapshot.last : null,
       );
+
       _productSnapshot.addAll(snap.docs);
       if (snap.docs.length < documentLimit) _hasNext = false;
+
       notifyListeners();
     } catch (error) {
       _errorMessage = error.toString();
@@ -117,7 +119,6 @@ class ProductBloc extends ChangeNotifier {
           }
           break;
       }
-      print('notifying listeners');
       notifyListeners();
     } catch (error) {
       _errorMessage = error.toString();

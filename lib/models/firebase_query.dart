@@ -8,6 +8,8 @@ class FirebaseQuery {
   static Future<QuerySnapshot> getProducts(int limit,
       {DocumentSnapshot? startAfter}) async {
     final productLimit = productCollection.limit(limit);
+
+    
     if (startAfter == null) {
       return productLimit.get();
     }

@@ -19,12 +19,13 @@ class _AllProductsState extends State<AllProducts> {
     final List<ProductData> _items = widget.productBloc.productData;
 
     int productDataLength = _items.length;
-
+    
+   
     if (productDataLength == 0) {
       return SliverList(
         delegate: SliverChildListDelegate(
           [
-            Text("Loading..."),
+            Container(height: 25, width: 25, child: CircularProgressIndicator(),),
           ],
         ),
       );
