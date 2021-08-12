@@ -130,9 +130,10 @@ class _BrowseProductsState extends State<BrowseProducts> {
 
   Widget _shopMenu(BuildContext context) {
     final mapBloc = Provider.of<MapBloc>(context);
-    // final cart = Provider.of<CartBloc>(context);
+    final cart = Provider.of<CartBloc>(context);
 
-    String _dropoffLocation = mapBloc.placeDetails?.formattedAddress ?? 'Choose Location';
+    String _dropoffLocation =
+        mapBloc.placeDetails?.formattedAddress ?? 'Choose Location';
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 5.0),
       child: Row(
@@ -145,15 +146,27 @@ class _BrowseProductsState extends State<BrowseProducts> {
             icon: Icon(Icons.location_on_rounded),
             label: Text('$_dropoffLocation'),
           ),
-          Material(
-            color: Colors.transparent,
-            child: InkWell(
-              onTap: () {},
-              child: IconButton(
-                icon: Icon(Icons.shopping_cart),
-                onPressed: () {},
-              ),
-            ),
+          Padding(
+            padding: const EdgeInsets.only(right: 5.0),
+            child: Material(
+                color: Colors.transparent,
+                child: InkWell(
+                  onTap: () {},
+                  child: Stack(
+                    children: [
+                      IconButton(
+                        icon: Icon(Icons.shopping_cart),
+                        onPressed: () {
+
+                        },
+                      ),
+                      Positioned(
+                          top: 3.0,
+                          right: 4.0,
+                          child: Center(child: Text('${cart.quantity}')))
+                    ],
+                  ),
+                )),
           ),
         ],
       ),

@@ -36,7 +36,7 @@ class _AllProductsState extends State<AllProducts> {
             return Container(
                 padding: const EdgeInsets.fromLTRB(15.0, 0, 15.0, 15.0),
                 height: MediaQuery.of(context).size.height * 0.28,
-                child: ProductCard(item: _items[index]));
+                child: ProductCard(product: _items[index]));
           },
           childCount: _items.length,
         ),

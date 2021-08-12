@@ -1,13 +1,15 @@
+import 'package:flightclub/blocs/cart_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../models/product_data.dart';
 
 class ProductCard extends StatefulWidget {
-  final ProductData item;
+  final ProductData product;
 
   ProductCard({
     Key? key,
-    required this.item,
+    required this.product,
   }) : super(key: key);
 
   @override
@@ -19,7 +21,9 @@ class _ProductCardState extends State<ProductCard> {
 
   @override
   Widget build(BuildContext context) {
+    final cart = Provider.of<CartBloc>(context);
     ThemeData themeData = Theme.of(context);
+
     return InkWell(
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
@@ -45,19 +49,19 @@ class _ProductCardState extends State<ProductCard> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Hero(
-                  tag: widget.item.hashCode,
+                  tag: widget.product.hashCode,
                   child: Image.asset(
-                    widget.item.image,
+                    widget.product.image,
                     height: constraints.maxHeight * 0.4,
                   ),
                 ),
                 SizedBox(height: 10),
-                Text(widget.item.name,
+                Text(widget.product.name,
                     overflow: TextOverflow.ellipsis,
                     style: themeData.accentTextTheme.headline6),
                 Expanded(
                   child: Text(
-                    widget.item.description,
+                    widget.product.description,
                     overflow: TextOverflow.fade,
                     style: themeData.accentTextTheme.subtitle1,
                   ),
@@ -66,7 +70,7 @@ class _ProductCardState extends State<ProductCard> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('\$${widget.item.price}',
+                    Text('\$${widget.product.price}',
                         style: themeData.accentTextTheme.headline6),
                     Container(
                       width: 30.0,
@@ -80,12 +84,14 @@ class _ProductCardState extends State<ProductCard> {
                             Border.all(color: themeData.accentColor, width: 1),
                       ),
                       child: IconButton(
-                        padding: EdgeInsets.all(1.0),
-                        color:
-                            addedToCart ? themeData.accentColor : Colors.white,
-                        icon: Icon(Icons.add),
-                        onPressed: _addProductToCart,
-                      ),
+                          padding: EdgeInsets.all(1.0),
+                          color: addedToCart
+                              ? themeData.accentColor
+                              : Colors.white,
+                          icon: Icon(Icons.add),
+                          onPressed: () {
+                            _onPressAdd(cart);
+                          }),
                     ),
                   ],
                 ),
@@ -97,9 +103,14 @@ class _ProductCardState extends State<ProductCard> {
     );
   }
 
-  void _addProductToCart() {
-    setState(() {
-      addedToCart = !addedToCart;
-    });
+  void _onPressAdd(CartBloc cart) {
+    if (cart.cartContains(widget.product)) {
+      addedToCart = false;
+      cart.removeFromCart(widget.product);
+      print(cart.cartItems);
+    } else {
+      addedToCart = true;
+      cart.addToCart(widget.product);
+    }
   }
 }

@@ -12,11 +12,13 @@ import './pages/checkout.dart';
 import './pages/edit_profile.dart';
 import './pages/profile.dart';
 import './pages/checkout_summary.dart';
-import 'blocs/product_bloc.dart';
 import './pages/browse_products/browse_products.dart';
 
 import './custom_theme.dart';
+
 import 'blocs/map_bloc.dart';
+import 'blocs/cart_bloc.dart';
+import 'blocs/product_bloc.dart';
 
 Future main() async {
   await dotenv.load();
@@ -53,6 +55,7 @@ class _FlightClubState extends State<FlightClub> {
       providers: [
         ChangeNotifierProvider(create: (context) => MapBloc()),
         ChangeNotifierProvider(create: (context) => ProductBloc()),
+        ChangeNotifierProvider(create: (context) => CartBloc()),
 
       ],
         child: MaterialApp(
