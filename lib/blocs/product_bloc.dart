@@ -41,6 +41,7 @@ class ProductBloc extends ChangeNotifier {
           image: product['image'],
         );
       }).toList();
+
   List<ProductData> get featuredProductData =>
       _productFeaturedSnapshot.map((snap) {
         final Map<String, dynamic> product =

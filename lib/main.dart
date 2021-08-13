@@ -59,7 +59,7 @@ class _FlightClubState extends State<FlightClub> {
 
       ],
         child: MaterialApp(
-          initialRoute: '/home',
+          initialRoute: '/browseproducts',
           routes: {
             '/': (context) => Loading(),
             '/walkthrough': (context) => Walkthrough(),

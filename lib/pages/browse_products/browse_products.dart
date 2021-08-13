@@ -88,7 +88,7 @@ class _BrowseProductsState extends State<BrowseProducts> {
                   ],
                 ),
               ),
-              AllProducts(productBloc: productBloc),
+              AllProducts(),
               if (productBloc.hasNext)
                 SliverList(
                   delegate: SliverChildListDelegate(
@@ -157,7 +157,7 @@ class _BrowseProductsState extends State<BrowseProducts> {
                       IconButton(
                         icon: Icon(Icons.shopping_cart),
                         onPressed: () {
-
+                          Navigator.pushNamed(context, '/checkout');
                         },
                       ),
                       Positioned(

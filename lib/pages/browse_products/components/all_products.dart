@@ -1,13 +1,14 @@
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'product_card.dart';
 import '../../../blocs/product_bloc.dart';
 import '../../../models/product_data.dart';
 
 class AllProducts extends StatefulWidget {
-  final ProductBloc productBloc;
-  AllProducts({Key? key, required this.productBloc}) : super(key: key);
+//   final ProductBloc productBloc;
+  AllProducts({Key? key}) : super(key: key);
 
   @override
   _AllProductsState createState() => _AllProductsState();
@@ -16,7 +17,8 @@ class AllProducts extends StatefulWidget {
 class _AllProductsState extends State<AllProducts> {
   @override
   Widget build(BuildContext context) {
-    final List<ProductData> _items = widget.productBloc.productData;
+      final productBloc = Provider.of<ProductBloc>(context);
+    final List<ProductData> _items = productBloc.productData;
 
     int productDataLength = _items.length;
     

@@ -49,7 +49,7 @@ class _ProductCardState extends State<ProductCard> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Hero(
-                  tag: widget.product.hashCode,
+                  tag: '${ProductData.count + widget.product.hashCode}',
                   child: Image.asset(
                     widget.product.image,
                     height: constraints.maxHeight * 0.4,

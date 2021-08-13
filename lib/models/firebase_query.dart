@@ -1,13 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+
 class FirebaseQuery {
   static final productCollection =
       FirebaseFirestore.instance.collection('products');
 
+  // Query all products that are not special
   static Future<QuerySnapshot> getProducts(int limit,
       {DocumentSnapshot? startAfter}) async {
-    final productLimit = productCollection.limit(limit);
+    final productLimit = productCollection
+        .where('featured', isEqualTo: false)
+        .where('exclusive', isEqualTo: false)
+        .limit(limit);
 
-    
     if (startAfter == null) {
       return productLimit.get();
     }

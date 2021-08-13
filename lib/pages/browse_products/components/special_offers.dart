@@ -5,7 +5,7 @@ import 'product_card.dart';
 
 class SpecialOffers extends StatefulWidget {
   final List<ProductData> productList;
-
+// final String special;
   SpecialOffers({
     Key? key,
     required this.productList,

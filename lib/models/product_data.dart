@@ -7,6 +7,7 @@ class ProductData {
   late final String name;
   late final double price;
   late final String sku;
+  static int count = 0;
 
   ProductData(
       {required this.category,
@@ -17,6 +18,7 @@ class ProductData {
       required this.price,
       required this.sku,
       String image = 'assets/image/drone_art.png'}) {
+    ProductData.count ++;
     this.image = image;
   }
   
@@ -30,6 +32,7 @@ class ProductData {
     int result = 17;
     result = 37 * result + sku.hashCode;
     result = 37 * result + name.hashCode;
+    result = 37 * result + image.hashCode;
     return result;
   }
 }
