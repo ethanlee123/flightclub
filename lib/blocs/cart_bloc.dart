@@ -1,3 +1,5 @@
+import 'package:flightclub/models/product_data.dart';
+
 import '../models/product_data.dart';
 import 'package:flutter/material.dart';
 
@@ -25,4 +27,8 @@ class CartBloc extends ChangeNotifier {
   bool cartContains(ProductData product) {
     return _cartItems.contains(product);
   }
+
+//   void addProductToCart(ProductData productData, bool add) {
+//       productData.addProduct = add;
+//   }
 }

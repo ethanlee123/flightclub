@@ -162,7 +162,7 @@ class _CheckoutState extends State<Checkout> {
         return Container(
             padding: const EdgeInsets.fromLTRB(0.0, 0, 0.0, 15.0),
             height: MediaQuery.of(context).size.height * 0.28,
-            child: ProductCard(product: cart.cartItems[index]));
+            child: ProductCard(productData: cart.cartItems[index]));
       }, childCount: cart.cartItems.length),
     );
   }

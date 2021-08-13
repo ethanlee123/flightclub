@@ -18,10 +18,11 @@ class ProductData {
       required this.price,
       required this.sku,
       String image = 'assets/image/drone_art.png'}) {
-    ProductData.count ++;
+    ProductData.count++;
     this.image = image;
   }
-  
+
+
   // Override == operator to compare sku (should always be unique) and name
   @override
   bool operator ==(covariant ProductData other) =>

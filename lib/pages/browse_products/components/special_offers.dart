@@ -5,7 +5,6 @@ import 'product_card.dart';
 
 class SpecialOffers extends StatefulWidget {
   final List<ProductData> productList;
-// final String special;
   SpecialOffers({
     Key? key,
     required this.productList,
@@ -24,7 +23,7 @@ class _SpecialOffersState extends State<SpecialOffers> {
         padding: const EdgeInsets.fromLTRB(15.0, 0, 15.0, 10.0),
         scrollDirection: Axis.horizontal,
         itemCount: widget.productList.length,
-        itemBuilder: (_, i) => ProductCard(product: widget.productList[i]),
+        itemBuilder: (_, i) => ProductCard(productData: widget.productList[i]),
         separatorBuilder: (_, __) => SizedBox(width: 10),
       ),
     );

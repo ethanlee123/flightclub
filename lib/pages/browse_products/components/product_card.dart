@@ -1,15 +1,16 @@
-import 'package:flightclub/blocs/cart_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../models/product_data.dart';
+import '../../../blocs/cart_bloc.dart';
+import '../../../blocs/product_bloc.dart';
 
 class ProductCard extends StatefulWidget {
-  final ProductData product;
+  final ProductData productData;
 
   ProductCard({
     Key? key,
-    required this.product,
+    required this.productData,
   }) : super(key: key);
 
   @override
@@ -22,6 +23,7 @@ class _ProductCardState extends State<ProductCard> {
   @override
   Widget build(BuildContext context) {
     final cart = Provider.of<CartBloc>(context);
+    final productBloc = Provider.of<ProductBloc>(context);
     ThemeData themeData = Theme.of(context);
 
     return InkWell(
@@ -49,34 +51,33 @@ class _ProductCardState extends State<ProductCard> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Hero(
-                  tag: '${ProductData.count + widget.product.hashCode}',
+                  tag: '${ProductData.count + widget.productData.hashCode}',
                   child: Image.asset(
-                    widget.product.image,
+                    widget.productData.image,
                     height: constraints.maxHeight * 0.4,
                   ),
                 ),
                 SizedBox(height: 10),
-                Text(widget.product.name,
+                Text(widget.productData.name,
                     overflow: TextOverflow.ellipsis,
                     style: themeData.accentTextTheme.headline6),
                 Expanded(
                   child: Text(
-                    widget.product.description,
+                    widget.productData.description,
                     overflow: TextOverflow.fade,
                     style: themeData.accentTextTheme.subtitle1,
                   ),
                 ),
-                // Spacer(),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('\$${widget.product.price}',
+                    Text('\$${widget.productData.price}',
                         style: themeData.accentTextTheme.headline6),
                     Container(
                       width: 30.0,
                       height: 30.0,
                       decoration: BoxDecoration(
-                        color: addedToCart
+                        color: cart.cartContains(widget.productData)
                             ? themeData.backgroundColor
                             : themeData.accentColor,
                         borderRadius: BorderRadius.circular(10),
@@ -85,14 +86,14 @@ class _ProductCardState extends State<ProductCard> {
                       ),
                       child: IconButton(
                           padding: EdgeInsets.all(1.0),
-                          color: addedToCart
+                          color: cart.cartContains(widget.productData)
                               ? themeData.accentColor
                               : Colors.white,
                           icon: Icon(Icons.add),
                           onPressed: () {
-                            _onPressAdd(cart);
+                            _onPressAdd(cart, productBloc);
                           }),
-                    ),
+                    )
                   ],
                 ),
               ],
@@ -103,14 +104,9 @@ class _ProductCardState extends State<ProductCard> {
     );
   }
 
-  void _onPressAdd(CartBloc cart) {
-    if (cart.cartContains(widget.product)) {
-      addedToCart = false;
-      cart.removeFromCart(widget.product);
-      print(cart.cartItems);
-    } else {
-      addedToCart = true;
-      cart.addToCart(widget.product);
-    }
+  void _onPressAdd(CartBloc cart, ProductBloc productBloc) {
+    cart.cartContains(widget.productData)
+      ? cart.removeFromCart(widget.productData)
+      : cart.addToCart(widget.productData);
   }
 }

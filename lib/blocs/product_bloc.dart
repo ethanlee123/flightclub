@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flightclub/models/product_data.dart';
 import 'package:flutter/material.dart';
 
 import '../models/firebase_query.dart';
+import '../models/product_data.dart';
 
 class ProductBloc extends ChangeNotifier {
   // Contains all products
@@ -132,4 +132,5 @@ class ProductBloc extends ChangeNotifier {
   Future massWriteProducts() async {
     FirebaseQuery.massWriteProducts();
   }
+
 }
