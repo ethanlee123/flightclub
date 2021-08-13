@@ -27,8 +27,4 @@ class CartBloc extends ChangeNotifier {
   bool cartContains(ProductData product) {
     return _cartItems.contains(product);
   }
-
-//   void addProductToCart(ProductData productData, bool add) {
-//       productData.addProduct = add;
-//   }
 }

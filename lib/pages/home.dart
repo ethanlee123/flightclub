@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
-import './browse_products/browse_products.dart';
-import 'map.dart';
-import 'profile.dart';
+import '../tab_navigator.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -12,69 +10,86 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  late int _selectedIndex;
+  String _currentPage = 'page1';
+  List<String> pageKeys = ["page1", "page2", "page3"];
 
-  final List<Widget> _pages = [
-    Map(),
-    BrowseProducts(),
-    Profile(),
-  ];
+  var _navigatorKeys = {
+    "page1": GlobalKey<NavigatorState>(),
+    "page2": GlobalKey<NavigatorState>(),
+    "page3": GlobalKey<NavigatorState>(),
+  };
 
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
+  late int _selectedIndex = 0;
 
-  @override
-  void initState() {
-    _selectedIndex = 0;
-    super.initState();
+  void _selectTab(String tabItem, int index) {
+    if (tabItem == _currentPage) {
+      _navigatorKeys[tabItem]!.currentState!.popUntil((route) => route.isFirst);
+    } else {
+      setState(() {
+        _currentPage = pageKeys[index];
+        _selectedIndex = index;
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: _buildPage(),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        // backgroundColor: Theme.of(context).accentColor,
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: "Home",
+    return WillPopScope(
+      onWillPop: () async {
+        final isFirstRouteInCurrentTab =
+            await _navigatorKeys[_currentPage]!.currentState!.maybePop();
+        if (isFirstRouteInCurrentTab) {
+          if (_currentPage != "page1") {
+            _selectTab("page1", 1);
+
+            return false;
+          }
+        }
+        // let system handle back button if we're on the first route
+        return isFirstRouteInCurrentTab;
+      },
+      child: Scaffold(
+        body: SafeArea(
+          child: Stack(
+            children: [
+              _buildOffStageNavigator('page1'),
+              _buildOffStageNavigator('page2'),
+              _buildOffStageNavigator('page3'),
+            ],
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.child_care_rounded),
-            label: "Shop",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.account_circle),
-            label: "Profile",
-          ),
-        ],
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
+          currentIndex: _selectedIndex,
+          onTap: (int index) {
+            _selectTab(pageKeys[index], index);
+          },
+          items: <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: "Home",
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.child_care_rounded),
+              label: "Shop",
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.account_circle),
+              label: "Profile",
+            ),
+          ],
+        ),
       ),
     );
   }
 
-  Stack _buildPage() {
-    List<Widget> children = [];
-    _pages.asMap().forEach((index, value) {
-      children.add(
-        Offstage(
-          offstage: _selectedIndex != index,
-          child: TickerMode(
-            enabled: _selectedIndex == index,
-            child: value,
-          ),
-        ),
-      );
-    });
-
-    return Stack(children: children);
+  Widget _buildOffStageNavigator(String tabItem) {
+    return Offstage(
+      offstage: _currentPage != tabItem,
+      child: TabNavigator(
+        navigatorKey: _navigatorKeys[tabItem],
+        tabItem: tabItem,
+      ),
+    );
   }
 }

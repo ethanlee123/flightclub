@@ -3,22 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-import './pages/loading.dart';
-import './pages/walkthrough.dart';
-import './pages/home.dart';
-import './pages/login.dart';
-import './pages/signup.dart';
-import './pages/checkout.dart';
-import './pages/edit_profile.dart';
-import './pages/profile.dart';
-import './pages/checkout_summary.dart';
-import './pages/browse_products/browse_products.dart';
-
 import './custom_theme.dart';
 
 import 'blocs/map_bloc.dart';
 import 'blocs/cart_bloc.dart';
 import 'blocs/product_bloc.dart';
+import 'route_generator.dart';
 
 Future main() async {
   await dotenv.load();
@@ -59,19 +49,10 @@ class _FlightClubState extends State<FlightClub> {
 
       ],
         child: MaterialApp(
-          initialRoute: '/browseproducts',
-          routes: {
-            '/': (context) => Loading(),
-            '/walkthrough': (context) => Walkthrough(),
-            '/home': (context) => Home(),
-            '/login': (context) => Login(),
-            '/signup': (context) => SignUp(),
-            '/checkout': (context) => Checkout(),
-            '/browseproducts': (context) => BrowseProducts(),
-            '/profile': (context) => Profile(),
-            '/editprofile': (context) => EditProfile(),
-            '/checkoutsummary': (context) => CheckoutSummary(),
-          },
+
+          initialRoute: '/home',
+        onGenerateRoute: RouteGenerator.generateRoute,
+
           theme: CustomTheme.lightTheme,
           darkTheme: CustomTheme.darkTheme,
           themeMode: currentTheme.currentTheme,
