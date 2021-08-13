@@ -1,10 +1,11 @@
 import 'dart:async';
 
-import 'package:flightclub/blocs/cart_bloc.dart';
-import 'package:flightclub/blocs/map_bloc.dart';
-import 'package:flightclub/pages/components/checkout_details.dart';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import '../blocs/cart_bloc.dart';
+import '../blocs/map_bloc.dart';
 
 import 'browse_products/components/product_card.dart';
 import 'components/product_name.dart';
@@ -189,6 +190,11 @@ class _CheckoutState extends State<Checkout> {
             onPressed: () {
               // Validate returns true if the form is valid, or false otherwise.
               if (_formKey.currentState!.validate()) {
+                final Map<String, dynamic> data = {
+                  'name': fullName,
+                  'number': contactNumber,
+                  'products': productNames
+                };
                 // If the form is valid, display a snackbar. In the real world,
                 // you'd often call a server or save the information in a database.
                 ScaffoldMessenger.of(context).showSnackBar(
@@ -197,10 +203,7 @@ class _CheckoutState extends State<Checkout> {
                 Navigator.pushNamed(
                   context,
                   '/checkoutsummary',
-                  arguments: CheckoutDetails(
-                      name: fullName,
-                      number: contactNumber,
-                      products: productNames),
+                  arguments: data,
                 );
               }
             },

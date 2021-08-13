@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 
-import 'components/checkout_details.dart';
-
+// ignore: must_be_immutable
 class CheckoutSummary extends StatelessWidget {
-  CheckoutSummary({Key? key}) : super(key: key);
+  final data;
+  CheckoutSummary({Key? key, required this.data}) : super(key: key);
   DateTime currentDateTime = DateTime.now();
 //   Map checkoutDetails;
 
   @override
   Widget build(BuildContext context) {
     ThemeData themeData = Theme.of(context);
-    final checkoutDetails =
-        ModalRoute.of(context)!.settings.arguments as CheckoutDetails;
-    print(checkoutDetails);
+    // final checkoutDetails =
+    //     ModalRoute.of(context)!.settings.arguments as CheckoutDetails;
+    // print(checkoutDetails);
     return Scaffold(
         backgroundColor: themeData.primaryColor,
         appBar: AppBar(
@@ -51,10 +51,10 @@ class CheckoutSummary extends StatelessWidget {
               SizedBox(height: 30.0),
               Text('Drop off contact:',
                   style: themeData.accentTextTheme.subtitle2),
-              Text('${checkoutDetails.name}',
+              Text('${data['name']}',
                   style: themeData.primaryTextTheme.subtitle2),
               SizedBox(height: 10.0),
-              Text('${checkoutDetails.number}',
+              Text('${data['number']}',
                   style: themeData.primaryTextTheme.subtitle2),
               SizedBox(height: 30.0),
               Text('Drop off location:',
@@ -63,7 +63,7 @@ class CheckoutSummary extends StatelessWidget {
                   style: themeData.primaryTextTheme.subtitle2),
               SizedBox(height: 30.0),
               Text('Products:', style: themeData.accentTextTheme.subtitle2),
-              Text('${checkoutDetails.products.join(', ')}',
+              Text('${data['products'].join(', ')}',
                   style: themeData.primaryTextTheme.subtitle2),
               SizedBox(height: 30.0),
               ElevatedButton(

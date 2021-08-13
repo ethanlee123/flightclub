@@ -34,7 +34,7 @@ class RouteGenerator {
       case '/editprofile':
         return MaterialPageRoute(builder: (_) => EditProfile());
       case '/checkoutsummary':
-        return MaterialPageRoute(builder: (_) => CheckoutSummary());
+          return MaterialPageRoute(builder: (_) => CheckoutSummary(data: args));
       default: 
         // TODO: return error route for route that doesn't exist
         return MaterialPageRoute(builder: (_) => Map());
