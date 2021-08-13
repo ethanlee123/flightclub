@@ -1,6 +1,3 @@
-import 'dart:async';
-
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -23,7 +20,6 @@ class _CheckoutState extends State<Checkout> {
 
   late String fullName;
   late String contactNumber;
-  List<String> productNames = [];
 
   @override
   Widget build(BuildContext context) {
@@ -112,8 +108,6 @@ class _CheckoutState extends State<Checkout> {
                         SizedBox(height: 15.0),
                       ],
                     ),
-                    //   _buildCartItems(context, cart),
-                    // ],
                   ),
                 ],
               ),
@@ -193,7 +187,6 @@ class _CheckoutState extends State<Checkout> {
                 final Map<String, dynamic> data = {
                   'name': fullName,
                   'number': contactNumber,
-                  'products': productNames
                 };
                 // If the form is valid, display a snackbar. In the real world,
                 // you'd often call a server or save the information in a database.
