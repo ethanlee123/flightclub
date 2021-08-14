@@ -23,7 +23,8 @@ class TabNavigator extends StatelessWidget {
     } else if (tabItem == 'page3') {
       child = Profile();
     } else {
-        child = Map();
+        // TODO: default error page
+        child = BrowseProducts();
     }
 
     return Navigator(

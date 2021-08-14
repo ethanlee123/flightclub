@@ -15,30 +15,31 @@ import 'pages/Map.dart';
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings routeSettings) {
     final args = routeSettings.arguments;
+
     switch (routeSettings.name) {
       case '/':
-        return MaterialPageRoute(builder: (_) => Home());
+        return MaterialPageRoute(builder: (context) => Loading());
       case '/walkthrough':
-        return MaterialPageRoute(builder: (_) => Walkthrough());
+        return MaterialPageRoute(builder: (context) => Walkthrough());
       case '/home':
-        return MaterialPageRoute(builder: (_) => Map());
+        return MaterialPageRoute(builder: (context) => Home());
       case '/login':
-        return MaterialPageRoute(builder: (_) => Login());
+        return MaterialPageRoute(builder: (context) => Login());
       case '/signup':
-        return MaterialPageRoute(builder: (_) => SignUp());
+        return MaterialPageRoute(builder: (context) => SignUp());
       case '/checkout':
-        return MaterialPageRoute(builder: (_) => Checkout());
+        return MaterialPageRoute(builder: (context) => Checkout());
       case '/browseproducts':
-        return MaterialPageRoute(builder: (_) => BrowseProducts());
+        return MaterialPageRoute(builder: (context) => BrowseProducts());
       case '/profile':
-        return MaterialPageRoute(builder: (_) => Profile());
+        return MaterialPageRoute(builder: (context) => Profile());
       case '/editprofile':
-        return MaterialPageRoute(builder: (_) => EditProfile());
+        return MaterialPageRoute(builder: (context) => EditProfile());
       case '/checkoutsummary':
-          return MaterialPageRoute(builder: (_) => CheckoutSummary(data: args));
+          return MaterialPageRoute(builder: (context) => CheckoutSummary(data: args));
       default: 
         // TODO: return error route for route that doesn't exist
-        return MaterialPageRoute(builder: (_) => Map());
+        return MaterialPageRoute(builder: (context) => BrowseProducts());
     }
   }
 }

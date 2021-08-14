@@ -80,159 +80,156 @@ class _MapState extends State<Map> {
       ),
     ]);
 
-    return Provider(
-      create: (BuildContext context) {},
-      child: Scaffold(
-        body: SafeArea(
-          child: Stack(
-            children: [
-              Column(
-                children: <Widget>[
-                  TextField(
-                    decoration: InputDecoration(
-                      labelText: "Find an address",
-                      suffixIcon: Icon(Icons.search),
-                    ),
-                    onTap: () => showSearchResults = true,
-                    onChanged: (value) => {mapBloc.searchPlaces(value)},
-                    onEditingComplete: () => {
-                      showSearchResults = false,
-                      FocusScope.of(context).unfocus(),
-                    },
+    return Scaffold(
+      body: SafeArea(
+        child: Stack(
+          children: [
+            Column(
+              children: <Widget>[
+                TextField(
+                  decoration: InputDecoration(
+                    labelText: "Find an address",
+                    suffixIcon: Icon(Icons.search),
                   ),
-                  (mapBloc.loaded)
-                      ? Expanded(
-                          child: Stack(
-                            children: <Widget>[
-                              Container(
-                                //   height: 300,
-                                child: GoogleMap(
-                                  mapType: MapType.normal,
-                                  initialCameraPosition: _initialCameraPosition,
-                                  zoomControlsEnabled: false,
-                                  myLocationEnabled: true,
-                                  markers: {
+                  onTap: () => showSearchResults = true,
+                  onChanged: (value) => {mapBloc.searchPlaces(value)},
+                  onEditingComplete: () => {
+                    showSearchResults = false,
+                    FocusScope.of(context).unfocus(),
+                  },
+                ),
+                (mapBloc.loaded)
+                    ? Expanded(
+                        child: Stack(
+                          children: <Widget>[
+                            Container(
+                              //   height: 300,
+                              child: GoogleMap(
+                                mapType: MapType.normal,
+                                initialCameraPosition: _initialCameraPosition,
+                                zoomControlsEnabled: false,
+                                myLocationEnabled: true,
+                                markers: {
+                                  Marker(
+                                    position: LatLng(
+                                        warehouseLocations.locations[0].lat,
+                                        warehouseLocations.locations[0].lng),
+                                    markerId: MarkerId('warehouse 0'),
+                                    icon:
+                                        BitmapDescriptor.defaultMarkerWithHue(
+                                            BitmapDescriptor.hueGreen),
+                                  ),
+                                  Marker(
+                                    position: LatLng(
+                                        warehouseLocations.locations[1].lat,
+                                        warehouseLocations.locations[1].lng),
+                                    markerId: MarkerId('warehouse 1'),
+                                    icon:
+                                        BitmapDescriptor.defaultMarkerWithHue(
+                                            BitmapDescriptor.hueGreen),
+                                  ),
+                                  Marker(
+                                    position: LatLng(
+                                        warehouseLocations.locations[2].lat,
+                                        warehouseLocations.locations[2].lng),
+                                    markerId: MarkerId('warehouse 2'),
+                                    icon:
+                                        BitmapDescriptor.defaultMarkerWithHue(
+                                            BitmapDescriptor.hueGreen),
+                                  ),
+                                  if (mapBloc.prioritizeCurrentLoc)
                                     Marker(
                                       position: LatLng(
-                                          warehouseLocations.locations[0].lat,
-                                          warehouseLocations.locations[0].lng),
+                                          mapBloc.currentLocation.latitude,
+                                          mapBloc.currentLocation.longitude),
                                       markerId: MarkerId('warehouse 0'),
-                                      icon:
-                                          BitmapDescriptor.defaultMarkerWithHue(
-                                              BitmapDescriptor.hueGreen),
-                                    ),
-                                    Marker(
-                                      position: LatLng(
-                                          warehouseLocations.locations[1].lat,
-                                          warehouseLocations.locations[1].lng),
-                                      markerId: MarkerId('warehouse 1'),
-                                      icon:
-                                          BitmapDescriptor.defaultMarkerWithHue(
-                                              BitmapDescriptor.hueGreen),
-                                    ),
-                                    Marker(
-                                      position: LatLng(
-                                          warehouseLocations.locations[2].lat,
-                                          warehouseLocations.locations[2].lng),
-                                      markerId: MarkerId('warehouse 2'),
-                                      icon:
-                                          BitmapDescriptor.defaultMarkerWithHue(
-                                              BitmapDescriptor.hueGreen),
-                                    ),
-                                    if (mapBloc.prioritizeCurrentLoc)
-                                      Marker(
-                                        position: LatLng(
-                                            mapBloc.currentLocation.latitude,
-                                            mapBloc.currentLocation.longitude),
-                                        markerId: MarkerId('warehouse 0'),
-                                      )
-                                    else
-                                      (dropOffMarker),
-                                  },
-                                  // Circle/Radius around warehouse locations
-                                  circles: warehouseLocationCircles,
-                                  onLongPress: (position) => {
-                                    _changeMarker(
-                                        position.latitude, position.longitude),
-                                    mapBloc.changePriority(),
-                                    _setPolylines(mapBloc, position.latitude,
-                                        position.longitude),
-                                  },
-                                  onMapCreated:
-                                      (GoogleMapController controller) => {
-                                    _assignControllers(controller),
-                                    _setPolylines(
-                                        mapBloc,
-                                        mapBloc.currentLocation.latitude,
-                                        mapBloc.currentLocation.longitude),
-                                  },
-                                  polylines: _polylines,
+                                    )
+                                  else
+                                    (dropOffMarker),
+                                },
+                                // Circle/Radius around warehouse locations
+                                circles: warehouseLocationCircles,
+                                onLongPress: (position) => {
+                                  _changeMarker(
+                                      position.latitude, position.longitude),
+                                  mapBloc.changePriority(),
+                                  _setPolylines(mapBloc, position.latitude,
+                                      position.longitude),
+                                },
+                                onMapCreated:
+                                    (GoogleMapController controller) => {
+                                  _assignControllers(controller),
+                                  _setPolylines(
+                                      mapBloc,
+                                      mapBloc.currentLocation.latitude,
+                                      mapBloc.currentLocation.longitude),
+                                },
+                                polylines: _polylines,
+                              ),
+                            ),
+                            if (mapBloc.searchResults.length != 0 &&
+                                showSearchResults)
+                              Container(
+                                width: double.infinity,
+                                height:
+                                    MediaQuery.of(context).size.height / 2,
+                                decoration: BoxDecoration(
+                                  color: Colors.black.withOpacity(0.6),
+                                  backgroundBlendMode: BlendMode.darken,
                                 ),
                               ),
-                              if (mapBloc.searchResults.length != 0 &&
-                                  showSearchResults)
-                                Container(
-                                  width: double.infinity,
-                                  height:
-                                      MediaQuery.of(context).size.height / 2,
-                                  decoration: BoxDecoration(
-                                    color: Colors.black.withOpacity(0.6),
-                                    backgroundBlendMode: BlendMode.darken,
-                                  ),
+                            if (mapBloc.searchResults.length != 0 &&
+                                showSearchResults)
+                              Container(
+                                width: double.infinity,
+                                height:
+                                    MediaQuery.of(context).size.height / 2,
+                                child: ListView.builder(
+                                  itemCount: mapBloc.searchResults.length,
+                                  itemBuilder: (context, index) {
+                                    return ListTile(
+                                      title: Text(
+                                        mapBloc
+                                            .searchResults[index].description,
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                      onTap: () {
+                                        _onTapSearchResult(mapBloc, index);
+                                      },
+                                    );
+                                  },
                                 ),
-                              if (mapBloc.searchResults.length != 0 &&
-                                  showSearchResults)
-                                Container(
-                                  width: double.infinity,
-                                  height:
-                                      MediaQuery.of(context).size.height / 2,
-                                  child: ListView.builder(
-                                    itemCount: mapBloc.searchResults.length,
-                                    itemBuilder: (context, index) {
-                                      return ListTile(
-                                        title: Text(
-                                          mapBloc
-                                              .searchResults[index].description,
-                                          style: TextStyle(color: Colors.white),
-                                        ),
-                                        onTap: () {
-                                          _onTapSearchResult(mapBloc, index);
-                                        },
-                                      );
-                                    },
-                                  ),
-                                ),
-                            ],
-                          ),
-                        )
-                      : Center(
-                          child: CircularProgressIndicator(),
+                              ),
+                          ],
                         ),
-                ],
-              ),
-              Positioned(
-                left: 0,
-                bottom: (showBottomMenu
-                    ? 0
-                    : -(MediaQuery.of(context).size.height / 5)),
-                child: GestureDetector(
-                    onPanEnd: (details) {
-                      // debugPrint(details.velocity.pixelsPerSecond.dy.toString());
-                      if (details.velocity.pixelsPerSecond.dy > threshold) {
-                        setState(() {
-                          showBottomMenu = false;
-                        });
-                      } else if (details.velocity.pixelsPerSecond.dy <
-                          -threshold) {
-                        setState(() {
-                          showBottomMenu = true;
-                        });
-                      }
-                    },
-                    child: BottomDrawer()),
-              )
-            ],
-          ),
+                      )
+                    : Center(
+                        child: CircularProgressIndicator(),
+                      ),
+              ],
+            ),
+            Positioned(
+              left: 0,
+              bottom: (showBottomMenu
+                  ? 0
+                  : -(MediaQuery.of(context).size.height / 5)),
+              child: GestureDetector(
+                  onPanEnd: (details) {
+                    // debugPrint(details.velocity.pixelsPerSecond.dy.toString());
+                    if (details.velocity.pixelsPerSecond.dy > threshold) {
+                      setState(() {
+                        showBottomMenu = false;
+                      });
+                    } else if (details.velocity.pixelsPerSecond.dy <
+                        -threshold) {
+                      setState(() {
+                        showBottomMenu = true;
+                      });
+                    }
+                  },
+                  child: BottomDrawer()),
+            )
+          ],
         ),
       ),
     );

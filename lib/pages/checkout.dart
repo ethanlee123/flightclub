@@ -193,8 +193,7 @@ class _CheckoutState extends State<Checkout> {
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(content: Text('Processing Data')),
                 );
-                Navigator.pushNamed(
-                  context,
+                Navigator.of(context, rootNavigator: true).pushNamed(
                   '/checkoutsummary',
                   arguments: data,
                 );

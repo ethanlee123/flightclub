@@ -55,9 +55,9 @@ class _BrowseProductsState extends State<BrowseProducts> {
 
     ThemeData themeData = Theme.of(context);
 
-    return SafeArea(
-      child: Scaffold(
-        body: Container(
+    return Scaffold(
+      body: SafeArea(
+        child: Container(
           padding: EdgeInsets.only(top: 20, bottom: 10),
           color: themeData.backgroundColor,
           width: double.infinity,
@@ -141,7 +141,7 @@ class _BrowseProductsState extends State<BrowseProducts> {
         children: <Widget>[
           TextButton.icon(
             onPressed: () {
-              Navigator.pushNamed(context, '/home');
+              Navigator.of(context, rootNavigator: true).pushNamed('/home');
             },
             icon: Icon(Icons.location_on_rounded),
             label: Text('$_dropoffLocation'),
@@ -157,7 +157,7 @@ class _BrowseProductsState extends State<BrowseProducts> {
                       IconButton(
                         icon: Icon(Icons.shopping_cart),
                         onPressed: () {
-                          Navigator.pushNamed(context, '/checkout');
+                          Navigator.of(context, rootNavigator: true).pushNamed('/checkout');
                         },
                       ),
                       Positioned(

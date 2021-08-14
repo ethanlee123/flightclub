@@ -101,7 +101,7 @@ class CheckoutSummary extends StatelessWidget {
         ElevatedButton(
           onPressed: () {
             cartBloc.clearCart();
-            Navigator.pushReplacementNamed(context, '/browseproducts');
+            Navigator.of(context, rootNavigator: true).pushReplacementNamed('/home');
           },
           child: Text('Start new order'),
         ),

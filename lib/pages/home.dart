@@ -38,6 +38,7 @@ class _HomeState extends State<Home> {
       onWillPop: () async {
         final isFirstRouteInCurrentTab =
             await _navigatorKeys[_currentPage]!.currentState!.maybePop();
+            
         if (isFirstRouteInCurrentTab) {
           if (_currentPage != "page1") {
             _selectTab("page1", 1);
