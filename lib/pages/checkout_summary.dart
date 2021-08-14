@@ -84,7 +84,8 @@ class CheckoutSummary extends StatelessWidget {
         (BuildContext context, int index) {
           return Container(
             height: 25.0,
-            child: Text(cartBloc.cartItems[index].name, style: themeData.primaryTextTheme.subtitle2),
+            child: Text(cartBloc.cartItems[index].name,
+                style: themeData.primaryTextTheme.subtitle2),
           );
         },
         childCount: cartBloc.cartItems.length,
@@ -93,12 +94,13 @@ class CheckoutSummary extends StatelessWidget {
   }
 
   Widget _buildStartNewOrder(BuildContext context) {
-      final cartBloc = Provider.of<CartBloc>(context);
+    final cartBloc = Provider.of<CartBloc>(context);
     return SliverList(
       delegate: SliverChildListDelegate([
-          SizedBox(height: 15.0),
+        SizedBox(height: 15.0),
         ElevatedButton(
           onPressed: () {
+            cartBloc.clearCart();
             Navigator.pushReplacementNamed(context, '/browseproducts');
           },
           child: Text('Start new order'),
