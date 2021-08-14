@@ -7,16 +7,11 @@ class CheckoutSummary extends StatelessWidget {
   final data;
   CheckoutSummary({Key? key, required this.data}) : super(key: key);
   DateTime currentDateTime = DateTime.now();
-//   Map checkoutDetails;
 
   @override
   Widget build(BuildContext context) {
     ThemeData themeData = Theme.of(context);
 
-    // print(data['products'])
-    // final checkoutDetails =
-    //     ModalRoute.of(context)!.settings.arguments as CheckoutDetails;
-    // print(checkoutDetails);
     return Scaffold(
       backgroundColor: themeData.primaryColor,
       appBar: AppBar(
@@ -32,7 +27,7 @@ class CheckoutSummary extends StatelessWidget {
                 [_buildSummaryInfo(context, themeData)],
               ),
             ),
-            _buildProductsOrderedList(context),
+            _buildProductsOrderedList(context, themeData),
             _buildStartNewOrder(context),
           ],
         ),
@@ -78,28 +73,22 @@ class CheckoutSummary extends StatelessWidget {
             style: themeData.primaryTextTheme.subtitle2),
         SizedBox(height: 30.0),
         Text('Products:', style: themeData.accentTextTheme.subtitle2),
-        //   _buildProductsOrderedList(context),
-        //   Text('${data['products'].join(', ')}',
-        //   style: themeData.primaryTextTheme.subtitle2),
-        SizedBox(height: 30.0),
       ],
     );
   }
 
-  Widget _buildProductsOrderedList(BuildContext context) {
+  Widget _buildProductsOrderedList(BuildContext context, ThemeData themeData) {
     final cartBloc = Provider.of<CartBloc>(context);
     return SliverList(
       delegate: SliverChildBuilderDelegate(
         (BuildContext context, int index) {
           return Container(
             height: 25.0,
-            child: Text(cartBloc.cartItems[index].name),
+            child: Text(cartBloc.cartItems[index].name, style: themeData.primaryTextTheme.subtitle2),
           );
         },
         childCount: cartBloc.cartItems.length,
       ),
-      //     children: cartBloc.cartItems.map((product) {
-      //   return Container(height: 25.0, child: Text(product.name));
     );
   }
 
