@@ -46,6 +46,10 @@ class _BottomDrawerState extends State<BottomDrawer> {
     double height = MediaQuery.of(context).size.height / 5;
     double width = MediaQuery.of(context).size.width;
 
+    if (dropoff == '' && mapBloc.placeDetails != null) {
+        dropoff = mapBloc.placeDetails!.formattedAddress;
+    }
+
     return ClipRRect(
       borderRadius: BorderRadius.vertical(top: Radius.circular(20.0)),
       child: Container(
