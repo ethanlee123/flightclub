@@ -93,15 +93,13 @@ class CheckoutSummary extends StatelessWidget {
   }
 
   Widget _buildStartNewOrder(BuildContext context) {
+      final cartBloc = Provider.of<CartBloc>(context);
     return SliverList(
       delegate: SliverChildListDelegate([
           SizedBox(height: 15.0),
         ElevatedButton(
           onPressed: () {
-            Navigator.of(context).popUntil((route) {
-              return route.settings.name == '/home';
-            });
-            Navigator.of(context).popUntil(ModalRoute.withName('/home'));
+            Navigator.pushReplacementNamed(context, '/browseproducts');
           },
           child: Text('Start new order'),
         ),
