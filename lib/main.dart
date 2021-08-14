@@ -50,7 +50,7 @@ class _FlightClubState extends State<FlightClub> {
       ],
         child: MaterialApp(
 
-          initialRoute: '/home',
+        initialRoute: '/',
         onGenerateRoute: RouteGenerator.generateRoute,
 
           theme: CustomTheme.lightTheme,

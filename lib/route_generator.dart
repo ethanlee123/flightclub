@@ -4,6 +4,7 @@ import 'pages/browse_products/browse_products.dart';
 import 'pages/checkout.dart';
 import 'pages/checkout_summary.dart';
 import 'pages/edit_profile.dart';
+import 'pages/home.dart';
 import 'pages/loading.dart';
 import 'pages/login.dart';
 import 'pages/profile.dart';
@@ -16,7 +17,7 @@ class RouteGenerator {
     final args = routeSettings.arguments;
     switch (routeSettings.name) {
       case '/':
-        return MaterialPageRoute(builder: (_) => Loading());
+        return MaterialPageRoute(builder: (_) => Home());
       case '/walkthrough':
         return MaterialPageRoute(builder: (_) => Walkthrough());
       case '/home':
