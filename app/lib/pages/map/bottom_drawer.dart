@@ -1,8 +1,9 @@
 import 'dart:async';
 
-import 'package:flightclub/blocs/map_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import '../../blocs/map_bloc.dart';
 
 class BottomDrawer extends StatefulWidget {
   const BottomDrawer({

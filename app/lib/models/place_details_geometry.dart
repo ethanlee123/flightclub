@@ -1,4 +1,4 @@
-import 'package:flightclub/models/place_details_location.dart';
+import './place_details_location.dart';
 
 class PlaceDetailsGeometry {
   // Contains lat and lng

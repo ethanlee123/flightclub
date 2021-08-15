@@ -1,9 +1,10 @@
-import 'package:flightclub/models/place_details_result.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
-import 'package:flightclub/models/place_search.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:geolocator/geolocator.dart';
+
+import '../models/place_search.dart';
+import '../models/place_details_result.dart';
 
 class PlaceService {
   final dynamic mapsKey = dotenv.env['MAPS_API_KEY'];

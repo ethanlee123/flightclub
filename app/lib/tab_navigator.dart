@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'pages/browse_products/browse_products.dart';
 import 'pages/map/map.dart';
-import 'pages/Profile.dart';
+import 'pages/profile/Profile.dart';
 
 class TabNavigator extends StatelessWidget {
   final GlobalKey<NavigatorState>? navigatorKey;

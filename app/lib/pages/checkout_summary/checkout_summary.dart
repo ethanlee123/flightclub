@@ -1,6 +1,7 @@
-import 'package:flightclub/blocs/cart_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import '../../blocs/cart_bloc.dart';
 
 // ignore: must_be_immutable
 class CheckoutSummary extends StatelessWidget {

@@ -1,5 +1,5 @@
-import 'package:flightclub/models/place_details_geometry.dart';
-import 'package:flightclub/utils/remove_last_word.dart';
+import './place_details_geometry.dart';
+import '../utils/remove_last_word.dart';
 
 class PlaceDetailsResult {
   final PlaceDetailsGeometry geometry;

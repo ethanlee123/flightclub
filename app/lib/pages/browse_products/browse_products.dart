@@ -1,5 +1,3 @@
-import 'package:flightclub/blocs/cart_bloc.dart';
-import 'package:flightclub/blocs/map_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
@@ -8,6 +6,8 @@ import 'components/all_products.dart';
 import 'components/banner.dart';
 import 'components/special_offers.dart';
 import '../../blocs/product_bloc.dart';
+import '../../blocs/cart_bloc.dart';
+import '../../blocs/map_bloc.dart';
 
 class BrowseProducts extends StatefulWidget {
   const BrowseProducts({Key? key}) : super(key: key);

@@ -1,11 +1,11 @@
 import 'dart:async';
 import 'dart:math';
 
-import 'package:flightclub/models/place_details_result.dart';
-import 'package:flightclub/models/place_search.dart';
-import 'package:flightclub/models/warehouse._locations.dart';
-import 'package:flightclub/services/place_service.dart';
-import 'package:flightclub/utils/geocoord_distance.dart';
+import '../models/place_details_result.dart';
+import '../models/place_search.dart';
+import '../models/warehouse._locations.dart';
+import '../services/place_service.dart';
+import '../utils/geocoord_distance.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import '../services/geolocator_service.dart';

@@ -1,7 +1,6 @@
-import 'package:flightclub/models/product_data.dart';
+import 'package:flutter/material.dart';
 
 import '../models/product_data.dart';
-import 'package:flutter/material.dart';
 
 class CartBloc extends ChangeNotifier {
   static List<ProductData> _cartItems = [];
