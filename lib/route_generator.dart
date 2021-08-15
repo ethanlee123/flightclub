@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 
 import 'pages/browse_products/browse_products.dart';
-import 'pages/checkout.dart';
-import 'pages/checkout_summary.dart';
+import 'pages/checkout/checkout.dart';
+import 'pages/checkout_summary/checkout_summary.dart';
 import 'pages/edit_profile.dart';
 import 'pages/home.dart';
 import 'pages/loading.dart';
-import 'pages/login.dart';
-import 'pages/profile.dart';
-import 'pages/signup.dart';
-import 'pages/walkthrough.dart';
-import 'pages/Map.dart';
+import 'pages/authentication/login.dart';
+import 'pages/profile/profile.dart';
+import 'pages/authentication/signup.dart';
+import 'pages/walkthrough/walkthrough.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings routeSettings) {

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
-import 'components/slide.dart';
-import 'components/walkthrough_slides.dart';
+import 'slide.dart';
+import 'walkthrough_slides.dart';
 
 final List<Slide> slides = [
   Slide(
@@ -13,7 +13,7 @@ final List<Slide> slides = [
     key: 0,
   ),
   Slide(
-      title: "Enter package details.",
+      title: "Go Shopping.",
       imagePath: "assets/images/packages.png",
       info:
           "Our maximum payload is 3.9 lbs (1.8 kg). \n\nOur maximum distance at max. cargo capacity is TBD.  \n\n\nDisclaimer: individual mileage may vary",

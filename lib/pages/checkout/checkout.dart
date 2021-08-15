@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../blocs/cart_bloc.dart';
-import '../blocs/map_bloc.dart';
+import '../../blocs/cart_bloc.dart';
+import '../../blocs/map_bloc.dart';
 
-import 'browse_products/components/product_card.dart';
-import 'components/product_name.dart';
+import '../browse_products/components/product_card.dart';
+import '../components/product_name.dart';
 
 class Checkout extends StatefulWidget {
   const Checkout({Key? key}) : super(key: key);

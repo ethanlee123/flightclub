@@ -1,12 +1,13 @@
 import 'dart:async';
-import 'package:flightclub/blocs/map_bloc.dart';
-import 'package:flightclub/models/place_details_result.dart';
-import 'package:flightclub/models/warehouse._locations.dart';
-import 'package:flightclub/pages/components/bottom_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
+
+import './bottom_drawer.dart';
+import '../../blocs/map_bloc.dart';
+import '../../models/place_details_result.dart';
+import '../../models/warehouse._locations.dart';
 
 class Map extends StatefulWidget {
   const Map({Key? key}) : super(key: key);
