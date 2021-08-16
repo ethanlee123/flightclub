@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 
 import '../../blocs/cart_bloc.dart';
 import '../../blocs/map_bloc.dart';
 
+import '../../blocs/uav_bloc.dart';
 import '../browse_products/components/product_card.dart';
 import '../components/product_name.dart';
 
@@ -23,7 +25,9 @@ class _CheckoutState extends State<Checkout> {
 
   @override
   Widget build(BuildContext context) {
-    final cart = Provider.of<CartBloc>(context);
+    final mapBloc = Provider.of<MapBloc>(context);
+    final cartBloc = Provider.of<CartBloc>(context);
+    final uavBloc = Provider.of<UavBloc>(context);
 
     ThemeData themeData = Theme.of(context);
 
@@ -65,11 +69,7 @@ class _CheckoutState extends State<Checkout> {
                           padding:
                               const EdgeInsets.fromLTRB(15.0, 10.0, 0.0, 0.0),
                           child: Container(
-                            child: Consumer<MapBloc>(
-                                builder: (context, mapBloc, child) {
-                              return _buildDropOffLocation(mapBloc, themeData);
-                            }),
-                          ),
+                              child: _buildDropOffLocation(mapBloc, themeData)),
                         ),
                         SizedBox(height: 30.0),
                         Text(
@@ -112,11 +112,11 @@ class _CheckoutState extends State<Checkout> {
                 ],
               ),
             ),
-            _buildCartItems(context, cart),
+            _buildCartItems(context, cartBloc),
             SliverList(
               delegate: SliverChildListDelegate(
                 [
-                  _buildCancelConfirmButtons(context),
+                  _buildCancelConfirmButtons(context, uavBloc, mapBloc),
                 ],
               ),
             ),
@@ -162,7 +162,8 @@ class _CheckoutState extends State<Checkout> {
     );
   }
 
-  Widget _buildCancelConfirmButtons(BuildContext context) {
+  Widget _buildCancelConfirmButtons(
+      BuildContext context, UavBloc uavBloc, MapBloc mapBloc) {
     return Row(
       children: <Widget>[
         Flexible(
@@ -188,21 +189,35 @@ class _CheckoutState extends State<Checkout> {
                   'name': fullName,
                   'number': contactNumber,
                 };
+
                 // If the form is valid, display a snackbar. In the real world,
                 // you'd often call a server or save the information in a database.
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(content: Text('Processing Data')),
                 );
-                Navigator.of(context, rootNavigator: true).pushNamed(
-                  '/checkoutsummary',
-                  arguments: data,
-                );
+
+                // Attempt to execute python autonmous delivery script
+                _executeDelivery(uavBloc, mapBloc, data);
               }
             },
             child: Text('Checkout'),
           ),
         ),
       ],
+    );
+  }
+
+  void _executeDelivery(
+      UavBloc uavBloc, MapBloc mapBloc, Map<String, dynamic> data) async {
+    double lat = mapBloc.placeDetails!.geometry.location.lat;
+    double lng = mapBloc.placeDetails!.geometry.location.lng;
+
+    await uavBloc.executeDelivery(lat, lng);
+
+    // If successful, push onto stack checkout summary page
+    Navigator.of(context, rootNavigator: true).pushNamed(
+        '/checkoutsummary',
+        arguments: data,
     );
   }
 }

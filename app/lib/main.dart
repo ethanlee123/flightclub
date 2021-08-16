@@ -8,6 +8,7 @@ import './custom_theme.dart';
 import 'blocs/map_bloc.dart';
 import 'blocs/cart_bloc.dart';
 import 'blocs/product_bloc.dart';
+import 'blocs/uav_bloc.dart';
 import 'route_generator.dart';
 
 Future main() async {
@@ -46,6 +47,7 @@ class _FlightClubState extends State<FlightClub> {
         ChangeNotifierProvider(create: (context) => MapBloc()),
         ChangeNotifierProvider(create: (context) => ProductBloc()),
         ChangeNotifierProvider(create: (context) => CartBloc()),
+        ChangeNotifierProvider(create: (context) => UavBloc()),
 
       ],
         child: MaterialApp(

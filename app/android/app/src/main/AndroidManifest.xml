@@ -1,6 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="app.netlify.ethanlee123.flightclub">
    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+   <uses-permission android:name="android.permission.INTERNET"/>
+
    <application
         android:label="flightclub"
         android:icon="@mipmap/ic_launcher">
