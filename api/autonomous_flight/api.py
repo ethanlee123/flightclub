@@ -1,6 +1,8 @@
 from flask import Flask, jsonify, request
 import json
 
+import subprocess
+
 app = Flask(__name__)
 @app.route('/')
 def hello():
@@ -10,6 +12,9 @@ def hello():
 
 @app.route('/autoflight', methods = ['POST'])
 def autonomouFlightDelivery():
+    # Activate venv and run script
+
+
     json_file = {}
 
     requestData = request.data
