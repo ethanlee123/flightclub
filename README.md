@@ -1,0 +1,3 @@
+# FlightClub (Drone Delivery and Automation)
+
+A drone delivery application named FlightClub that can communicate with a physical drone (UAV). Upon receiving confirmation of a succesful request for shipment, a UAV will be sent instructions to navigate to a predetermined waypoint, that is the drop off location with the given packge and return home autonomously. Currently, the objective is to achieve 90% autonomy, the other 10% will include attaching and detaching the package.

@@ -1,3 +1,0 @@
-# flightclub
-
-A drone delivery application called FlightClub that can communicate with an actual physical drone. Upon receiving confirmation of a succesful request for shipment, a drone in real life will be sent instructions to go to a waypoint, that is the drop off location with the given cargo and return home autonomously. Currently, the objective is to achieve 90% autonomy, the other 10% will include attaching and detaching the package.
